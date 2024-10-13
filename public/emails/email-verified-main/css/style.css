@@ -1,0 +1,405 @@
+/* @font-face {
+    font-family: helveticalight;
+    src: url(../helveticafont/helveticalight.ttf);
+    font-weight:lighter;
+}
+@font-face {
+    font-family: helveticanormal;
+    src: url(../helveticafont/helvetica.ttf);
+    font-weight: normal;
+}
+@font-face {
+    font-family: helveticabold;
+    src: url(../helveticafont/helveticabold.ttf);
+    font-weight: bold;
+} */
+
+
+/* Start Variables */
+:root{
+    --main-color: #10cab7;
+    --secondary-color: #2c4755;
+    --paragraph-color: #575757;
+    --section-background: #f6f6f6;
+    --padding-top: 60px;
+    --padding-bottom: 60px;
+
+}
+/* End Variables */
+
+/* Start Global Rules */
+*{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+html{
+    scroll-behavior: smooth;
+}
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #FAFBFB;
+}
+.container{
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: auto;
+    margin-right: auto;
+}
+/* Small */
+@media (min-width: 768px) {
+    .container{width: 750px;}
+}
+/* Medium */
+@media (min-width: 992px) {
+    .container{width: 970px;}
+}
+/* Large */
+@media (min-width: 1200px) {
+    .container{width: 1170px;}
+}
+/* End Global Rules */
+
+/* Start Components */
+.mainContainer {
+    background-color: #FFF;
+    width: 75%;
+    margin: 12px auto 20px;
+    padding: 20px 16px;
+}
+@media (min-width: 350px) {
+    .mainContainer{width: 95%;}
+}
+@media (min-width: 576px) {
+    .mainContainer{width: 90%;}
+}
+@media (min-width: 768px) {
+    .mainContainer{width: 70%;}
+}
+/* Medium */
+@media (min-width: 992px) {
+    .mainContainer{width: 65%;}
+}
+/* Large */
+@media (min-width: 1200px) {
+    .mainContainer{width: 65%;}
+}
+.header .openin {
+    text-align: center;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 10px;
+    text-decoration: underline;
+    line-height: 1.2;
+    color: rgb(129, 129, 129);
+}
+.header .logoImg {
+    width: 120px;
+    object-fit: cover;
+}
+
+.content .title {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 1.2;
+    color: rgb(26, 26, 26);
+    margin-bottom: 8px;
+}
+
+@media (max-width: 768px) {
+    .content .title {
+        font-size: 24px;
+    }
+}
+
+.content .thanksTxt {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 1.5;
+    color: rgb(102, 102, 102);
+}
+
+.content .startBtn {
+    line-height: 1.2;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    text-decoration: none;
+    font-style: normal;
+    text-transform: uppercase;
+    color: rgb(26, 26, 26);
+    border-radius: 8px;
+    background-color: #D6B349;
+    color: #FFF;
+    padding: 10px 18px;
+    margin-top: 16px;
+    display: block;
+    width: fit-content;
+    cursor: pointer;
+    opacity: 1;
+    transition: all 0.2s ease-in-out;
+}
+
+.content .startBtn:hover {
+    opacity: 0.7;
+}
+
+.content .processingImage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.content .processingImage .processingImg {
+    width: 288px;
+    object-fit: cover;
+}
+
+.content .whatsnext {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    margin-bottom: 8px;
+}
+.content .whatsnext img {
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+}
+.content .whatsnext p {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 1.2;
+    color: rgb(26, 26, 26);
+}
+
+.content .ableTo {
+    border-bottom: 1px solid #f2f2f2;
+    margin-bottom: 20px;
+    padding-bottom: 40px;
+}
+
+.content .ableTo .once {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 1.5;
+    color: rgb(102, 102, 102);
+}
+
+.content .ableTo .extraList {
+    padding-inline-start: 24px;
+}
+
+.content .ableTo .extraList .listItem {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 1.5;
+    color: rgb(102, 102, 102);
+}
+
+.content .ableTo .depTitle {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 1.2;
+    color: rgb(26, 26, 26);
+    margin-top: 16px;
+    margin-bottom: 8px;
+}
+
+.content .ableTo .images {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+@media (max-width: 576px) {
+    .content .ableTo .images {
+        gap: 4px;
+    }
+}
+
+.content .ableTo .images .imageBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 4px;
+}
+.content .ableTo .images .imageBox .image {
+    border: 1px solid #f2f2f2;
+    padding: 8px;
+    border-radius: 8px;
+}
+@media (min-width: 350px) {
+    .content .ableTo .images .imageBox .image {
+        padding: 4px;
+    }
+}
+@media (min-width: 576px) {
+    .content .ableTo .images .imageBox .image {
+        padding: 4px;
+    }
+}
+.content .ableTo .images .imageBox .image img {
+    width: 76px;
+    object-fit: cover;
+}
+@media (min-width: 350px) {
+    .content .ableTo .images .imageBox .image img {
+        width: 40px;
+    }
+}
+@media (min-width: 576px) {
+    .content .ableTo .images .imageBox .image img {
+        width: 50px;
+    }
+}
+@media (min-width: 768px) {
+    .content .ableTo .images .imageBox .image img {
+        width: 50px;
+    }
+}
+/* Medium */
+@media (min-width: 992px) {
+    .content .ableTo .images .imageBox .image img {
+        width: 76px;
+    }
+}
+/* Large */
+@media (min-width: 1200px) {
+}
+.content .ableTo .images .imageBox span {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 10px;
+    font-weight: normal;
+    line-height: 1.2;
+    color: rgb(102, 102, 102);
+}
+
+@media (max-width: 576px) {
+    .content .ableTo .images .imageBox span {
+        font-size: 8px;
+    }
+}
+
+.content .ableTo .happy {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 1.5;
+    color: rgb(102, 102, 102);
+}
+.content .ableTo .sign {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.5;
+    color: rgb(102, 102, 102);
+    margin-top: 2px;
+}
+
+.content .ableTo .impNote {
+    background-color: #EAEAEA;
+    margin-left: -16px;
+    margin-right: -16px;
+    padding: 16px;
+    margin-top: 16px;
+}
+.content .ableTo .impNote .impNoteTxt {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.4;
+    color: rgb(26, 26, 26);
+}
+.content .ableTo .impNote .impNoteTxt span {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.content .ableTo .liveMarket .liveTitle {
+    margin-top: 32px;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 1.2;
+    color: rgb(26, 26, 26);
+}
+
+.content .ableTo .liveMarket .startBtn {
+
+}
+
+.content .legal {
+    border-bottom: 1px solid #f2f2f2;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+}
+
+.content .legal .bottomLogo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.content .legal .bottomLogo img {
+    width: 120px;
+    object-fit: cover;
+}
+
+.content .legal .legalUrl {
+    font-size: 14px;
+    line-height: 1.2;
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: 300;
+    text-decoration: underline;
+    font-style: normal;
+    color: rgb(0, 26, 255);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 26px;
+}
+
+.content .legal p {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 10px;
+    line-height: 1.4;
+    color: rgb(129, 129, 129);
+    margin-bottom: 20px;
+}
+
+.content .legal .p1 {
+    font-weight: bold;
+}
+
+.content .legal .p4 {
+    margin-bottom: 0px;
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 2px;
+}
+.footer .copyrights,
+.footer .address {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgb(102, 102, 102);
+    text-align: center;
+}
+.footer .address {}
+
