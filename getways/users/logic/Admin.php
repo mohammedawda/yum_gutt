@@ -27,18 +27,6 @@ class Admin
         }
     }
 
-    public function allUsersForAdmin($request)
-    {
-        try {
-            $criteria = $this->adminRepository->all_users($request);
-            return sendListResponse(true, __('All users'), $criteria['count'], $criteria['total'], UserResource::collection($criteria['list']));
-        } catch (Exception $e) {
-            $em = $e->getMessage() . ' ' . $e->getFile() . '  ' . $e->getLine();
-            Log::debug($em);
-            return sendResponse(false, __('all user exception'), null, $em, 500);
-        }
-    }
-
     public function TransactionBlock($request)
     {
         try {
@@ -54,18 +42,6 @@ class Admin
     {
         try {
             return $this->adminRepository->transactionActive($request);
-        } catch (Exception $e) {
-            $em = $e->getMessage() . ' ' . $e->getFile() . '  ' . $e->getLine();
-            Log::debug($em);
-            return sendResponse(false, __('all user exception'), null, $em, 500);
-        }
-    }
-
-    public function allUsersAnswer($request)
-    {
-        try {
-            $criteria = $this->adminRepository->all_usersAnswer($request);
-            return sendListResponse(true, __('All users'), $criteria['count'], $criteria['total'], UserAnswerResource::collection($criteria['list']));
         } catch (Exception $e) {
             $em = $e->getMessage() . ' ' . $e->getFile() . '  ' . $e->getLine();
             Log::debug($em);

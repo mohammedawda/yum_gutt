@@ -37,6 +37,8 @@ class CreateUserRequest extends FormRequest
             'fcm'                   => 'nullable',
             'country_code'          => 'required|string',
             'role_id'               => 'required|in:1,2,3',
+            'status'                => 'nullable|boolean',
+            'block'                 => 'nullable|boolean'
         ];       
     }
 

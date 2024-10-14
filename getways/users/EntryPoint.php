@@ -11,6 +11,9 @@ use getways\users\logic\authentication\UserVerification;
 use getways\users\logic\user\CreateUser;
 use getways\users\logic\Profile;
 use getways\users\logic\user\BaseUser;
+use getways\users\logic\user\ListUsers;
+use getways\users\logic\user\UserDestroy;
+use getways\users\logic\user\UserDetails;
 use getways\users\repositories\AdminRepository;
 use getways\users\repositories\AuthRepository;
 use getways\users\repositories\UserRepository;
@@ -33,9 +36,9 @@ class EntryPoint
         return (new UserVerification(new UserRepository()))->SendVerify($data);
     }
 
-    public function login(array $login_data)
+    public function login()
     {
-        return (new Login(new AuthRepository()))->login($login_data);
+        return (new Login(new AuthRepository()))->login();
     }
 
     public function admin_login(array $login_data)
@@ -44,9 +47,9 @@ class EntryPoint
         return $login_obj->admin_login($login_data);
     }
     
-    public function logout($logout_data)
+    public function logout()
     {
-        return (new Logout(new AuthRepository()))->logout($logout_data);
+        return (new Logout(new AuthRepository()))->logout();
     }
 
     public function reset(array $reset_data)
@@ -61,10 +64,30 @@ class EntryPoint
         return $login_obj->change_password($reset_data);
     }
 
-    /************************users************************/
+    /************************admins************************/
     public function CreateUser(array $data)
     {
         return (new CreateUser(new UserRepository()))->CreateUser($data);
+    }
+
+    public function allStores($filter)
+    {
+        return (new ListUsers(new UserRepository()))->allStores($filter);
+    }
+
+    public function allUsers($filter)
+    {
+        return (new ListUsers(new UserRepository()))->allUsers($filter);
+    }
+
+    public function userFind($userId)
+    {
+        return (new UserDetails(new UserRepository()))->userFind($userId);
+    }
+
+    public function deleteUser($userId) 
+    {
+        return (new UserDestroy(new UserRepository()))->deleteUser($userId);
     }
 
     public function avtivateUser($id)
@@ -72,10 +95,9 @@ class EntryPoint
         return (new BaseUser(new UserRepository()))->activateUser($id);
     }
 
-    public function BlockUser(array $data)
+    public function BlockUser($userId, $reason)
     {
-        $user_obj = new User(new UserRepository());
-        return $user_obj->block_user($data);
+        return (new BaseUser(new UserRepository()))->block_user($userId, $reason);
     }
 
     public function profile()
@@ -104,54 +126,36 @@ class EntryPoint
      */
     public function ChargeUserWallet(array $data)
     {
-        $user_obj = new User(new UserRepository());
+        $user_obj = new BaseUser(new UserRepository());
         return $user_obj->chargeWallet($data);
     }
     public function userWallet(array $data)
     {
-        $user_obj = new User(new UserRepository());
+        $user_obj = new BaseUser(new UserRepository());
         return $user_obj->userWallet($data);
     }
     public function userWalletAction(array $data)
     {
-        $user_obj = new User(new UserRepository());
+        $user_obj = new BaseUser(new UserRepository());
         return $user_obj->userWalletAction($data);
     }
     public function currency(array $data)
     {
-        $user_obj = new User(new UserRepository());
+        $user_obj = new BaseUser(new UserRepository());
         return $user_obj->Currency($data);
     }
-    public function userQuestion($request)
-    {
-        $user_obj = new User(new UserRepository());
-        return $user_obj->question($request);
-    }
-    public function answer($request)
-    {
-        $user_obj = new User(new UserRepository());
-        return $user_obj->answer($request);
-    }
+
     public function branches($request)
     {
-        $user_obj = new User(new UserRepository());
+        $user_obj = new BaseUser(new UserRepository());
         return $user_obj->branches($request);
     }
     public function UserTransaction($request,$user)
     {
-        $user_obj = new User(new UserRepository());
+        $user_obj = new BaseUser(new UserRepository());
         return $user_obj->Transactions($request,$user);
     }
-    public function allUsers($request)
-    {
-        $user_obj = new Admin(new AdminRepository());
-        return $user_obj->allUsersForAdmin($request);
-    }
-    public function userShow($data)
-    {
-        $user_obj = new Admin(new AdminRepository());
-        return $user_obj->showUserForAdmin($data);
-    }
+
     public function allUsersAnswer($request)
     {
         $user_obj = new Admin(new AdminRepository());

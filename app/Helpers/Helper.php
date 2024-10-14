@@ -69,10 +69,10 @@ if(!function_exists('getTakedPreparedCollection')) {
     function getTakedPreparedCollection($collection, $requestData)
     {
         $data['total'] = $collection->count();
-        $asc  = !empty($requestData['asc']) ? ($requestData['asc']) : '0';
-        $take  = !empty($requestData['take']) ? ($requestData['take']) : 10;
+        $asc   = isset($requestData['asc']) ? ($requestData['asc']) : 0;
+        $take  = isset($requestData['take']) ? ($requestData['take']) : 10;
         $take  = ($take == -1) ? 50000000 : $take;
-        $skip  = !empty($requestData['skip']) ? $requestData['skip'] : 0;
+        $skip  = isset($requestData['skip']) ? $requestData['skip'] : 0;
         $data['list']  = $collection->skip($skip)->take($take)
             ->when($asc == '1', function($query) {
                 $query->orderBy('id', 'asc');

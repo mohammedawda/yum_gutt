@@ -15,23 +15,12 @@ class AuthController extends Controller
 {
     public function login(LoginRequest $request)
     {
-        $login_data = $request->validated();
-        $data = [
-            'login_data' => $login_data,
-            'request' => $request,
-        ];
-        return loadGetway('users')->login($data);
+        return loadGetway('users')->login($request->validated());
     }
 
     public function admin_login(LoginRequest $request)
     {
-        $login_data = $request->validated();
-
-        $data = [
-            'login_data' => $login_data,
-            'request' => $request,
-        ];
-        return loadGetway('users')->admin_login($data);
+        return loadGetway('users')->admin_login($request->validated());
     }
     
     public function register(RegisterRequest $request)
@@ -68,8 +57,8 @@ class AuthController extends Controller
         return loadGetway('users')->SendVerify($verify_data);
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
-        return loadGetway('users')->logout($request);
+        return loadGetway('users')->logout();
     }
 }

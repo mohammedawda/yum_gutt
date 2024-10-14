@@ -23,7 +23,7 @@ class CreateUser extends BaseUser
                 Mail::to($user->email)->queue(new VerifyEmail($email_data));
                 return sendResponse(true, __('Your registration has been completed. Kindly verify your email.'), new UserResource($user));
             }
-            return sendResponse(true, __('Created successfully'), []);
+            return sendResponse(true, __('Created successfully'), new UserResource($user));
         } catch (Exception $e) {
             $em = $e->getMessage() . ' ' . $e->getFile() . '  ' . $e->getLine();
             Log::debug($em);

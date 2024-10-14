@@ -13,6 +13,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
     const ADMIN_ROLE = 1;
+    const STORE_ROLE = 2;
+    const USER_ROLE  = 3;
     /**
      * The attributes that are mass assignable.
      *
@@ -38,17 +40,14 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'action_at' => 'datetime',
+        'action_at'         => 'datetime',
     ];
-    public function getNameAttribute()
-    {
-        return $this->first_name .' '. $this->last_name;
-    }
 
     public function getNationalIdPhotoUrlAttribute(): string
     {
-        return ExistsImage($this->nationalId_photo);
+        return ExistsImage($this->national_id_photo);
     }
+
     public function deposit_wallet($amount,$desc)
     {
         $this->increment('wallet', $amount);
@@ -76,23 +75,37 @@ class User extends Authenticatable
             'type'=>'1'
         ]);
     }
+    /********************************************* scopes *********************************************/
+    public function scopeCountryId($query)
+    {
+        return $query->where('country_id', config('app.country_id'));
+    }
+
+    public function scopeAllStores($query)
+    {
+        return $query->where('role_id', User::STORE_ROLE);
+    }
+
+    public function scopeAllUsers($query)
+    {
+        return $query->where('role_id', User::USER_ROLE);
+    }
     /********************************************* relations *********************************************/
     public function City(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(City::class);
     }
+
     public function country(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Country::class);
     }
-    public function addresses(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(UserAddress::class);
-    }
+
     public function wallets(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Wallet::class);
     }
+
     public function transactions(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(WalletTransaction::class);

@@ -47,24 +47,24 @@ class BaseUser
         }
     }
 
-    public function block_user(array $data)
+    public function block_user($userId, $reason)
     {
         try {
-            $UserId = $data['id'];
-            $user = $this->userRepository->get_user_data($UserId);
-            $block = $user->block == '0' ? '1' : '0';
-            $user->update([
-                'block' => $block,
-                'block_reason' => $data['reason'],
-                'action_by'=> Auth::guard('admin')->id(),
-                'action_at'=>Carbon::now()
+            $user = $this->userRepository->get_user_data($userId);
+            $block = $user->block == 0 ? 1 : 0;
+            $this->userRepository->updateUserByObject($user, [
+                'block'        => $block,
+                'block_reason' => $reason,
+                'action_by'    => Auth::id(),
+                'action_at'    => Carbon::now()
             ]);
-            $message = $user->block ? 'This user is blocked.' : 'This user is unblocked.';
-            return sendResponse(true, __($message), []);
+            $message = $block ? 'This user is blocked.' : 'This user is unblocked.';
+            return sendMessage(true, __($message));
         } catch (Exception $e) {
-            $em = $e->getMessage() . ' ' . $e->getFile() . '  ' . $e->getLine();
-            Log::debug($em);
-            return sendResponse(false, __('users.login_exception'), null, $em, 500);
+            if(is_string($e->getCode()) || $e->getCode() == 0) {
+                return sendResponse(false, __('Sorry an error occured while blocking this user, please try again later.'), null, $e->__toString(), 500);
+            }
+            return sendResponse(false, $e->getMessage(), null, $e->__toString(), $e->getCode());
         }
     }
 

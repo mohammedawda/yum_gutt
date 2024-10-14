@@ -32,7 +32,9 @@ return new class extends Migration
             $table->string('password_str');
             $table->string('fcm')->nullable();
             $table->boolean('status')->default(0)->comment('1 => active');
-            $table->dateTime('action_at')->nullable();
+            $table->boolean('block')->default(0)->comment('1 => blocked');
+            $table->longText('block_reason')->nullable();
+            $table->timestamp('action_at')->nullable();
             $table->boolean('terms_and_condition')->default(0)->comment('1 => for accept terms');
             $table->bigInteger('wallet')->default(0);
             $table->rememberToken();

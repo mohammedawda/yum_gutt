@@ -11,11 +11,12 @@ class AdminResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'                => $this->id,
-            'name'              => $this->name,
-            'email'             => $this->email,
-            'phone'             => $this->phone,
-            'status'            => str($this->status),
+            'id'      => $this->id,
+            'name'    => $this->name,
+            'email'   => $this->email,
+            'phone'   => $this->phone,
+            'role_id' => $this->role_id,
+            'status'  => $this->status,
         ];
     }
 }

@@ -3,24 +3,36 @@
 namespace getways\users\controllers;
 
 use App\Http\Controllers\Controller;
-use App\Mail\ProcessingDocumentEmail;
-use App\Mail\ReceivedDocumentEmail;
-use App\Mail\VerifyEmail;
-use getways\users\models\User;
-use getways\users\requests\AnswerRequest;
 use getways\users\requests\ChargeWalletRequest;
 use getways\users\requests\CreateUserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
-
 class UsersController extends Controller
 {
+    /*************************admins*************************/
     public function createUser(CreateUserRequest $request)
     {
-        $validate = $request->validated();
-        $validate['status'] = '1';
-        return loadGetway('users')->CreateUser($validate);
+        return loadGetway('users')->CreateUser($request->validated());
+    }
+
+    public function userFind($userId)
+    {
+        return loadGetway('users')->userFind($userId);
+    }
+
+    public function allStores(Request $request)
+    {
+        return loadGetway('users')->allStores($request->all());
+    }
+
+    public function allUsers(Request $request)
+    {
+        return loadGetway('users')->allUsers($request->all());
+    }
+
+    public function deleteUser($userId)
+    {
+        return loadGetway('users')->deleteUser($userId);
     }
 
     public function active($id)
@@ -28,14 +40,13 @@ class UsersController extends Controller
         return loadGetway('users')->avtivateUser($id);
     }
 
-    public function block(Request $request,$id)
+    public function block($userId, Request $request)
     {
-        $data = [
-            'id'=>$id,
-            'reason'=>$request->reason
-        ];
-        return loadGetway('users')->BlockUser($data);
+        return loadGetway('users')->BlockUser($userId, $request->reason);
     }
+    /*************************users*************************/
+
+
     public function chargeWallet(ChargeWalletRequest $request)
     {
         $data = [
@@ -74,17 +85,9 @@ class UsersController extends Controller
         return loadGetway('users')->UserTransaction($request,$user);
     }
 
-    public function userQuestion(Request $request)
-    {
-        return loadGetway('users')->userQuestion($request);
-    }
     public function branches(Request $request)
     {
         return loadGetway('users')->branches($request);
-    }
-    public function userAnswer(AnswerRequest $request)
-    {
-        return loadGetway('users')->answer($request);
     }
 
 }

@@ -6,10 +6,12 @@ use Illuminate\Support\Facades\Auth;
 
 class Logout
 {
-    public function logout($logout_data)
+    public function logout()
     {
-        if (Auth::check()) {
-            Auth::user()->currentAccessToken()->delete();;
+        $authed = Auth::user();
+        if ($authed) {
+            $authed->currentAccessToken()->delete();;
+            $authed->tokens()->delete();
         }
         return sendResponse(true, trans('Successfully logged out'), []);
     }
