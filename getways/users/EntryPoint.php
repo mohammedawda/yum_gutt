@@ -12,6 +12,7 @@ use getways\users\logic\user\CreateUser;
 use getways\users\logic\Profile;
 use getways\users\logic\user\BaseUser;
 use getways\users\logic\user\ListUsers;
+use getways\users\logic\user\UpdateUser;
 use getways\users\logic\user\UserDestroy;
 use getways\users\logic\user\UserDetails;
 use getways\users\repositories\AdminRepository;
@@ -68,6 +69,11 @@ class EntryPoint
     public function CreateUser(array $data)
     {
         return (new CreateUser(new UserRepository()))->CreateUser($data);
+    }
+
+    public function updateUser($userId, array $data)
+    {
+        return (new UpdateUser(new UserRepository()))->updateUser($userId, $data);
     }
 
     public function allStores($filter)

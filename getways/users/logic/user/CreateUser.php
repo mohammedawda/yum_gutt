@@ -6,10 +6,9 @@ use App\Mail\VerifyEmail;
 use Exception;
 use getways\users\resources\UserResource;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-
 class CreateUser extends BaseUser
 {
     public function createUser(array $data)
@@ -25,9 +24,11 @@ class CreateUser extends BaseUser
             }
             return sendResponse(true, __('Created successfully'), new UserResource($user));
         } catch (Exception $e) {
-            $em = $e->getMessage() . ' ' . $e->getFile() . '  ' . $e->getLine();
-            Log::debug($em);
-            return sendResponse(false, __('users.login_exception'), null, $em, 500);
+            DB::rollback();
+            if(is_string($e->getCode()) || $e->getCode() == 0) {
+                return sendResponse(false, __('Sorry an error occured while creating this user, please try again later.'), null, $e->__toString(), 500);
+            }
+            return sendResponse(false, $e->getMessage(), null, $e->__toString(), $e->getCode());
         }
     }
 

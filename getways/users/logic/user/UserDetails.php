@@ -9,10 +9,7 @@ class UserDetails extends BaseUser
     public function userFind($userId)
     {
         try {
-            $user = $this->userRepository->get_user_data($userId);
-            if(!$user) {
-                throw new Exception(__('User not found'), 404);
-            }
+            $user = $this->getUserIfExist($userId);
             return sendResponse(true, __('User details'), new UserResource($user));
         } catch (Exception $e) {
             if(is_string($e->getCode()) || $e->getCode() == 0) {

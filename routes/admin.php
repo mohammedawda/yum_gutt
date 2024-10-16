@@ -21,6 +21,7 @@ Route::middleware([AdminMiddleware::class])->group(function () {
     
     Route::controller(UsersController::class)->group(function () {
         Route::post('/create_user', 'createUser');
+        Route::post('/update_user/{user_id}', 'updateUser');
         Route::get('find/user/{user_id}', 'userFind');
         Route::get('delete/user/{user_id}', 'deleteUser');
         Route::get('/stores/all', 'allStores');

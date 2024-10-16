@@ -23,10 +23,19 @@ class BaseUser
 
     protected function uploadUserImages(&$data)
     {
-        if (array_key_exists('national_id_photo', $data)) {
+        if (array_key_exists('national_id_photo', $data) && !is_null($data['national_id_photo'])) {
             $image = Arr::pull($data, 'national_id_photo');
             $data['national_id_photo'] = upload($image, 'user_images');
         }
+    }
+
+    protected function getUserIfExist($userId)
+    {
+        $user = $this->userRepository->get_user_data($userId);
+        if(!$user) {
+            throw new Exception(__('User not found'), 404);
+        }
+        return $user;
     }
     
     public function activateUser($UserId)

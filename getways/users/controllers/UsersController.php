@@ -5,6 +5,7 @@ namespace getways\users\controllers;
 use App\Http\Controllers\Controller;
 use getways\users\requests\ChargeWalletRequest;
 use getways\users\requests\CreateUserRequest;
+use getways\users\requests\UpdateUserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 class UsersController extends Controller
@@ -13,6 +14,11 @@ class UsersController extends Controller
     public function createUser(CreateUserRequest $request)
     {
         return loadGetway('users')->CreateUser($request->validated());
+    }
+
+    public function updateUser($userId, UpdateUserRequest $request)
+    {
+        return loadGetway('users')->updateUser($userId, $request->validated());
     }
 
     public function userFind($userId)

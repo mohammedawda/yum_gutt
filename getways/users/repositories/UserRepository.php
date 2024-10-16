@@ -19,7 +19,7 @@ class UserRepository
     {
         return User::find($id);
     }
-
+    
     public function deleteUserByObject($user)
     {
         return $user->delete();
