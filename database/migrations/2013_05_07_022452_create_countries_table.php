@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('countries', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->json('name');
             $table->string('code')->comment('like EG');
-            $table->string('Currency_code')->comment('like EGP');
+            $table->string('currency_code')->comment('like EGP');
             $table->boolean('status')->default(1)->comment('1 is available');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();

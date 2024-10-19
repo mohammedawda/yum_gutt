@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use getways\countries\models\Country;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 class CountriesSeeder extends Seeder
 {
     /**
@@ -11,25 +11,11 @@ class CountriesSeeder extends Seeder
      */
     public function run(): void
     {
-        $countries = [
-            [
-                'name'          => '',
-                'code'          => 'eg',
-                'Currency_code' => 'egp',
-                'status'        => 1,
-            ],[
-                'name'          => 'sweden' ,
-                'code'          => 'se',
-                'Currency_code' => 'se',
-                'status'        => 1,
-            ],[
-                'name'          => 'United Arab Emirates' ,
-                'code'          => 'AE',
-                'Currency_code' => 'UAE',
-                'status'        => 0,
-            ]
-        ];
-
-        DB::table('countries')->insert($countries);
+        Country::create([
+            'name'          => ['en' => 'default country', 'ar' => 'بلد افتراضى'],
+            'code'          => 'dc',
+            'currency_code' => 'dc',
+            'status'        => 1,
+        ]);
     }
 }

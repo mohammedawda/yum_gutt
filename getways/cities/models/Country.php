@@ -1,6 +1,6 @@
 <?php
 
-namespace getways\cores\models;
+namespace getways\cities\models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

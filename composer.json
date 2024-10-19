@@ -35,7 +35,10 @@
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
             "getways\\cores\\": "getways/cores",
-            "getways\\admins\\": "getways/admins",
+            "getways\\cities\\": "getways/cities",
+            "getways\\countries\\": "getways/countries",
+            "getways\\branches\\": "getways/branches",
+            "getways\\settings\\": "getways/settings",
             "getways\\users\\": "getways/users"
         }
     },

@@ -1,19 +1,19 @@
 <?php
 
-namespace getways\cores\models;
+namespace getways\cities\models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Spatie\Translatable\HasTranslations;
 class City extends Model
 {
-    use HasFactory;
+    use HasTranslations;
 
-    protected $guarded = [];
+    protected $guarded   = [];
+    public $translatable = ['name'];
     /********************************************* attributes *********************************************/
     public function getNameAttribute()
     {
-        return app()->getLocale() == 'ar' ? $this->name_ar : $this->name_en;
+        return $this->getTranslations('name')[app()->getLocale()] ?? '';
     }
 
     public function getImageUrlAttribute()

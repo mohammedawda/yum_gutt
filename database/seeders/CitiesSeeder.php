@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use getways\cities\models\City;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 class CitiesSeeder extends Seeder
 {
     /**
@@ -11,7 +11,8 @@ class CitiesSeeder extends Seeder
      */
     public function run(): void
     {
-        $cities = array(['name'=> '15 May'],);
-        DB::table('cities')->insert($cities);
+        City::create([
+                'name' => ['en' => 'default city', 'ar' => 'مدينة افتراضية'],
+            ]);
     }
 }
