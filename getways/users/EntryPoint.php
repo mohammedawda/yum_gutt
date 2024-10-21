@@ -37,9 +37,9 @@ class EntryPoint
         return (new UserVerification(new UserRepository()))->SendVerify($data);
     }
 
-    public function login()
+    public function login($login_data)
     {
-        return (new Login(new AuthRepository()))->login();
+        return (new Login(new AuthRepository()))->login($login_data);
     }
 
     public function admin_login(array $login_data)
