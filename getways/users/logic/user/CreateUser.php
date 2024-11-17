@@ -4,19 +4,23 @@ namespace getways\users\logic\user;
 
 use App\Mail\VerifyEmail;
 use Exception;
+use getways\users\models\User;
 use getways\users\resources\UserResource;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-class CreateUser extends BaseUser
+class CreateUser extends BaseUser 
 {
     public function createUser(array $data)
     {
         try {
             $this->uploadUserImages($data);
             $this->prepareCreateUser($data);
+            DB::beginTransaction();
             $user = $this->userRepository->create_user($data);
+            $this->processCreateUserExtensions($user, $data);
+            DB::commit();
             if (Request()->url() == route('register')) {
                 $email_data = $this->prepareEmailedCreatedUser($user);
                 Mail::to($user->email)->queue(new VerifyEmail($email_data));
@@ -47,5 +51,15 @@ class CreateUser extends BaseUser
             'code' => $user->otp,
             'name' => $user->name
         ];
+    }
+
+    private function processCreateUserExtensions($user, $data)
+    {
+        if($user->role_id == User::USER_ROLE) {
+            return true;
+        } elseif($user->role_id == User::STORE_ROLE) {
+            return loadGetway('stores')->createStoreExtension($user, $data);
+        }
+        throw new Exception(__('Invalid user role'), 400);
     }
 }

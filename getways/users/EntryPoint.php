@@ -9,7 +9,7 @@ use getways\users\logic\authentication\Register;
 use getways\users\logic\authentication\ResetPassword;
 use getways\users\logic\authentication\UserVerification;
 use getways\users\logic\user\CreateUser;
-use getways\users\logic\Profile;
+use getways\users\logic\user\Profile;
 use getways\users\logic\user\BaseUser;
 use getways\users\logic\user\ListUsers;
 use getways\users\logic\user\UpdateUser;
@@ -106,16 +106,23 @@ class EntryPoint
         return (new BaseUser(new UserRepository()))->block_user($userId, $reason);
     }
 
-    public function profile()
+    /************************profiles************************/
+    public function storeProfile()
     {
-        $login_obj = new Profile(new AuthRepository());
-        return $login_obj->profile();
+        return (new Profile(new UserRepository()))->storeProfile();
     }
+
+    public function userProfile()
+    {
+        return (new Profile(new UserRepository()))->userProfile();
+    }
+
     public function updateProfile($request)
     {
         $login_obj = new Profile(new AuthRepository());
         return $login_obj->update_profile($request);
     }
+    
     public function updatePassword($request)
     {
         $login_obj = new Profile(new AuthRepository());

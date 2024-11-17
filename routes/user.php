@@ -1,12 +1,9 @@
 <?php
 
-use App\Http\Middleware\TrueCountryMiddleware;
+use App\Http\Middleware\StoreMiddleware;
 use App\Http\Middleware\UserMiddleware;
-use getways\orders\controllers\CouponController;
 use getways\orders\controllers\OrdersController;
-use getways\products\controllers\ProductController;
-use getways\users\controllers\AddressController;
-use getways\users\controllers\AuthController;
+use getways\stores\controllers\StoresController;
 use getways\users\controllers\ProfileController;
 use getways\users\controllers\UsersController;
 use Illuminate\Support\Facades\Route;
@@ -24,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware([UserMiddleware::class])->group(function () {
     Route::controller(ProfileController::class)->group(function () {
-        Route::get('/profile', 'get_data');
+        Route::get('/user_profile', 'getUserProfile');
         Route::post('/update_profile', 'update_data');
         Route::post('/update_password', 'update_password');
     });
@@ -35,23 +32,20 @@ Route::middleware([UserMiddleware::class])->group(function () {
         Route::get('/currency', 'currency');
         Route::get('/transactions', 'transactions');
     });
-    Route::controller(OrdersController::class)->group(function () {
-        Route::post('/purchase/{order_type}', 'purchaseOrder');
-        Route::post('/normal_order/add_to_cart', 'addToCart');
-        Route::get('/normal_order/user_bag', 'bag');
-        Route::delete('/normal_order/delete_from_cart/{cart_id}', 'deleteFromBag');
-        Route::get('/track_order', 'trackOrder');
+});
+
+Route::middleware([StoreMiddleware::class])->group(function () {
+    Route::prefix('store')->group(function() {
+        Route::controller(ProfileController::class)->group(function () {
+            Route::get('/store_profile', 'getStoreProfile');
+        });
+        Route::controller(StoresController::class)->group(function () {
+            Route::get('stat', 'getStats');
+        });
+        Route::controller(OrdersController::class)->group(function () {
+            Route::get('/orders/to/deliver', 'ordersToDeliver');
+            Route::get('/orders', 'storeOrders');
+        });
     });
-
-    Route::get('/coupon/check', [CouponController::class, 'couponCheck']);
-
-    Route::prefix('address')->controller(AddressController::class)->group(function () {
-        Route::get('', 'index');
-        Route::post('/store', 'store');
-        Route::get('/show/{id}', 'show');
-        Route::put('/update/{id}', 'update');
-        Route::delete('/destroy/{id}', 'destroy');
-    });
-
 });
 

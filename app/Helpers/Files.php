@@ -23,11 +23,15 @@ if (!function_exists('Upload')) {
 if (!function_exists('FileDir')) {
     function FileDir($dir)
     {
-        $url = 'public/uploads/';
+        $url = 'uploads/';
         switch($dir) {
             case 'user_images':
                 return  $url . 'user_images/';
                 break;
+            case 'profile_photo':
+                return $url . 'profile_photo/';
+            case 'product_images':
+                return $url . 'product_images/';
             default:
                 return  $url . 'images';
                 break;
@@ -36,23 +40,34 @@ if (!function_exists('FileDir')) {
 }
 
 
-if (!function_exists('ExistsImage')) {
-    function ExistsImage($dir): string
-    {
-        $path = public_path('uploads/images/'.$dir);
-        if (File::exists($path)){
-            $url = url('/uploads');
-            return $url .'/images'.'/'. $dir;
-        }
-        return '';
-    }
-}
+// if (!function_exists('ExistsImage')) {
+//     function ExistsImage($dir): string
+//     {
+//         $path = public_path('uploads/images/'.$dir);
+//         if (File::exists($path)){
+//             $url = url('/uploads');
+//             return $url .'/images'.'/'. $dir;
+//         }
+//         return '';
+//     }
+// }
 
 
 if (!function_exists('fileExists')) {
     function fileExists($path)
     {
         return File::exists($path);
+    }
+}
+
+if (!function_exists('GetFile')) {
+    function GetFile($path)
+    {
+        $status = fileExists($path);
+        if($status) {
+            return url($path);
+        }
+        return null;
     }
 }
 

@@ -1,6 +1,5 @@
 <?php
 
-use getways\cores\controllers\GeneralApiController;
 use getways\settings\controllers\SettingController;
 use getways\users\controllers\AuthController;
 use getways\users\controllers\UsersController;
@@ -29,13 +28,15 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/admin_logout', 'admin_logout')->middleware('auth:api');
 });
 Route::get('/settings', [SettingController::class, 'setting']);
-Route::get('/payment_methods', [GeneralApiController::class, 'payment_method'])/*->withoutMiddleware(TrueCountryMiddleware::class)*/;
-Route::get('/cities', [GeneralApiController::class, 'cities']);
-Route::get('/countries', [GeneralApiController::class, 'countries']);
+
+Route::prefix('store')->group(function () {
+    // Route::get('/branches', [UsersController::class, 'branches']);
+    require __DIR__ . '/store.php';
+});
 
 Route::prefix('user')->group(function () {
     Route::get('/branches', [UsersController::class, 'branches']);
-    require __DIR__ . '/mobile.php';
+    require __DIR__ . '/user.php';
 });
 
 Route::prefix('admin')->group(function () {

@@ -31,6 +31,7 @@ class CreateUserRequest extends FormRequest
             'national_id_photo'     => 'nullable|image|mimes:png,jpg,jpeg',
             'national_id_photo_type'=> 'nullable|string|in:passport,national_id',
             'national_id'           => 'required|string',
+            'profile_photo'         => 'required|image|mimes:png,jpg,jpeg',
             'email'                 => 'required|email|unique:users',
             'phone'                 => 'required|unique:users',
             'password'              => ['required', 'string', 'min:8', 'confirmed'],

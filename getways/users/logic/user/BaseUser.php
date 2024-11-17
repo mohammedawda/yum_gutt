@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Exception;
 use getways\users\models\Branch;
 use getways\users\models\PaymentMethod;
+use getways\users\models\User;
 use getways\users\repositories\UserRepository;
 use getways\users\resources\BranchResource;
 use getways\users\resources\UserTransactionsResource;
@@ -14,7 +15,6 @@ use getways\users\resources\WalletResource;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
-
 class BaseUser
 {
     public function __construct(protected UserRepository $userRepository)
@@ -26,6 +26,10 @@ class BaseUser
         if (array_key_exists('national_id_photo', $data) && !is_null($data['national_id_photo'])) {
             $image = Arr::pull($data, 'national_id_photo');
             $data['national_id_photo'] = upload($image, 'user_images');
+        }
+        if (array_key_exists('profile_photo', $data) && !is_null($data['profile_photo'])) {
+            $image = Arr::pull($data, 'profile_photo');
+            $data['profile_photo'] = upload($image, 'profile_photo');
         }
     }
 
@@ -109,7 +113,7 @@ class BaseUser
             $criteria = $this->userRepository->userTransaction($request,$user);
         if ($criteria['count'] > 0){
             return sendListResponse(true, __('Your transactions.'), $criteria['count'],
-                $criteria['total'], UserTransactionsResource::collection($criteria['list']));
+                $criteria['total'], $criteria['last_page'], UserTransactionsResource::collection($criteria['list']));
         }
         return sendResponse(false, __('You do not have a transactions Yet.'), null, null, 500);
 
@@ -146,7 +150,7 @@ class BaseUser
         try {
             $criteria = $this->userRepository->userWalletAction($data['request'],$data['user']);
             return sendListResponse(true, __('User wallet actions'), $criteria['count'],
-                $criteria['total'], WalletMovementResource::collection($criteria['list']));
+                $criteria['total'], $criteria['last_page'], WalletMovementResource::collection($criteria['list']));
         } catch (Exception $e) {
             $em = $e->getMessage() . ' ' . $e->getFile() . '  ' . $e->getLine();
             Log::debug($em);

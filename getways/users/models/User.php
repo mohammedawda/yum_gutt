@@ -43,9 +43,14 @@ class User extends Authenticatable
         'action_at'         => 'datetime',
     ];
 
-    public function getNationalIdPhotoUrlAttribute(): string
+    public function getNationalIdPhotoUrlAttribute()
     {
-        return ExistsImage($this->national_id_photo);
+        return !is_null($this->national_id_photo) ? GetFile(FileDir('user_images').$this->national_id_photo) : null;
+    }
+
+    public function getProfilePhotoAttribute($value)
+    {
+        return !is_null($value) ? GetFile(FileDir('profile_photo').$value) : null;
     }
 
     public function deposit_wallet($amount,$desc)
@@ -114,5 +119,10 @@ class User extends Authenticatable
     public function actionByAdmin()
     {
         return $this->belongsTo(User::class, 'action_by');
+    }
+
+    public function store()
+    {
+        return $this->hasOne(Store::class);
     }
 }

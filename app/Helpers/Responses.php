@@ -48,13 +48,14 @@ if (!function_exists('sendMessage')) {
  * @return json
  */
 if (!function_exists('sendListResponse')) {
-    function sendListResponse($status, $message, $count, $total, $data, $code = 200) {
+    function sendListResponse($status, $message, $count, $total, $lastPage, $data, $code = 200) {
         return response()->json([
-            "status"  => $status,
-            "message" => $message,
-            "total"   => $total,
-            "count"   => $count,
-            "data"    => $data,
+            "status"    => $status,
+            "message"   => $message,
+            "total"     => $total,
+            "count"     => $count,
+            "last_page" => $lastPage ?? 10,
+            "data"      => $data,
         ], $code);
     }
 }

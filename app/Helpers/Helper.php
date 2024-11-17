@@ -40,14 +40,15 @@ if (!function_exists('customRound')) {
 if (!function_exists('otp_generate')) {
     function otp_generate(): string
     {
-        if(config('app.payment_mode') == 'change'){
-            $number = mt_rand(100000, 999999);
-            if (User::where('otp', $number)->exists()) {
+        if(config('app.payment_mode') == 'change') {
+            $number = mt_rand(1000, 9999);
+            if (User::where('otp', $number)->exists())
                 otp_generate();
-            }
-        }else{
-            $number = '123456';
-        }
+        } 
+        
+        else 
+            $number = '1234';
+
         return $number;
     }
 }
@@ -81,7 +82,8 @@ if(!function_exists('getTakedPreparedCollection')) {
                 $query->orderBy('id', 'desc');
             })
             ->get();
-        $data['count'] = $data['list']->count();
+        $data['count']     = $data['list']->count();
+        $data['last_page'] = ceil($data['total'] / $take);
         return $data;
     }
 }
@@ -90,23 +92,5 @@ if(!function_exists('removeFirstZeroFromPhone')) {
     function removeFirstZeroFromPhone($phone): string
     {
         return ltrim($phone, '0');
-    }
-}
-
-if(!function_exists('getProductPriceDetails')) {
-    function getProductPriceDetails($product)
-    {
-        $manufacturePrice = $product->manufacture->price;
-        $productWeight    = $product->weight;
-        $localGoldPrice   = ($productWeight == 31.1) ? $product->localGoldPrice->ounce : $product->localGoldPrice->high_price * $productWeight;
-        #ther is no global prices for 21k
-        $globalGoldPrice  = ($productWeight == 31.1) ? $product->globalGoldPrice?->ounce : ((is_null($product->globalGoldPrice)) ? null : $product->globalGoldPrice?->high_price * $productWeight);
-        $taxes            = $product->globalGoldPrice?->taxes;
-        return [
-            'local_without_manufacture' => $localGoldPrice,
-            'local_with_manufacture'    => ($localGoldPrice) + ($productWeight * $manufacturePrice),
-            'global_without_manufacture'=> $globalGoldPrice,
-            'global_with_manufacture'   => is_null($globalGoldPrice) ? null : ($globalGoldPrice) + ($manufacturePrice * $productWeight) + ($taxes ?? 0),
-        ];
     }
 }

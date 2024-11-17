@@ -7,21 +7,23 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class CheckPermission
+class StoreMiddleware
 {
     /**
      * Handle an incoming request.
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next,$permission): Response
+    public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::guard('admin')->user()->hasPermissionTo($permission)) {
+        if (Auth::check() && Auth::user()->role_id == 2){
             return $next($request);
         }
         return response()->json([
-            'status'=>false,
-            'message'=>__("Accessing this page is not allowed for you.")
-        ],403);
+            'status' => false,
+            'code' => 403,
+            'message' =>__("You don't have access on this page because this page for stores") ,
+        ], 403);
+
     }
 }

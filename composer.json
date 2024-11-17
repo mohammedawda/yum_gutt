@@ -34,11 +34,13 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
-            "getways\\cores\\": "getways/cores",
+            "getways\\branches\\": "getways/branches",
             "getways\\cities\\": "getways/cities",
             "getways\\countries\\": "getways/countries",
-            "getways\\branches\\": "getways/branches",
+            "getways\\orders\\": "getways/orders",
+            "getways\\products\\": "getways/products",
             "getways\\settings\\": "getways/settings",
+            "getways\\stores\\": "getways/stores",
             "getways\\users\\": "getways/users"
         }
     },

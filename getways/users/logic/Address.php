@@ -18,7 +18,7 @@ class Address
     {
         try {
             $criteria = $this->repository->index($request);
-            return sendListResponse(true, __('All coupons'), $criteria['count'], $criteria['total'], $this->resource::collection($criteria['list']));
+            return sendListResponse(true, __('All coupons'), $criteria['count'], $criteria['total'], $criteria['last_page'], $this->resource::collection($criteria['list']));
         } catch (Exception $e) {
             if(is_string($e->getCode()) || $e->getCode() == 0) {
                 return sendMessage(false, __('Sorry an error occurred while get all coupons, please try again later'), $e->__toString(), 500);

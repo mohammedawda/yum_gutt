@@ -22,6 +22,7 @@ class UserResource extends JsonResource
             'national_id_photo'     => $this->national_id_photo_url,
             'city'                  => !is_null($this->city) ? new CityResource($this->city) : [],
             'country'               => !is_null($this->country) ? new CountryResource($this->country) : [],
+            'store'                 => $this->store ? new StoreDetailsResource($this->store) : null,
             'wallet'                => $this->wallet,
             'fcm'                   => $this->fcm,
             'created_at'            => $this->created_at->toFormattedDateString(),

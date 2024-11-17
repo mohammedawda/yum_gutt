@@ -19,7 +19,7 @@ class Admin
     {
         try {
             $criteria = $this->adminRepository->usersTransactions($request);
-            return sendListResponse(true, __('All users transactions'), $criteria['count'], $criteria['total'], UserTransactionsResource::collection($criteria['list']));
+            return sendListResponse(true, __('All users transactions'), $criteria['count'], $criteria['total'], $criteria['last_page'], UserTransactionsResource::collection($criteria['list']));
         } catch (Exception $e) {
             $em = $e->getMessage() . ' ' . $e->getFile() . '  ' . $e->getLine();
             Log::debug($em);

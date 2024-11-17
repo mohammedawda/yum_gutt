@@ -35,6 +35,13 @@ class UpdateUser extends BaseUser
 
     private function processUpdateUserImages(&$data, $user)
     {
+        $this->processNationalIdPhoto($user, $data);
+        $this->processProfilePhoto($user, $data);
+        $this->uploadUserImages($data);
+    }
+
+    private function processNationalIdPhoto($user, &$data)
+    {
         if (array_key_exists('national_id_photo', $data) && !is_null($data['national_id_photo'])) {
             if(!is_null($user->national_id_photo)) {
                 $oldImage = fileExists(FileDir('user_images'), $user->national_id_photo)
@@ -43,7 +50,19 @@ class UpdateUser extends BaseUser
                     unlinkFile($oldImage);
                 }
             }
-            $this->uploadUserImages($data);
+        }
+    }
+
+    private function processProfilePhoto($user, &$data)
+    {
+        if (array_key_exists('profile_photo', $data) && !is_null($data['profile_photo'])) {
+            if(!is_null($user->profile_photo)) {
+                $oldImage = fileExists(FileDir('profile_photo'), $user->profile_photo)
+                ? FileDir('profile_photo').$user->profile_photo : false;
+                if($oldImage) {
+                    unlinkFile($oldImage);
+                }
+            }
         }
     }
 }
