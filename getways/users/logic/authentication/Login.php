@@ -44,7 +44,7 @@ class Login
         //                ],500)
         //            ];
         //        }
-        if($user->role_id != User::STORE_ROLE || $user->role_id != User::USER_ROLE)
+        if($user->role_id != User::STORE_ROLE && $user->role_id != User::USER_ROLE)
             throw new Exception(__("Not authorized to visit this page."), 401);
 
         if($user->email_verified_at == null)
@@ -76,9 +76,9 @@ class Login
             return sendResponse(true, trans('users.login_success'), ['user' => new UserResource($user), 'token' => $accessToken]);
         } catch (Exception $e) {
             if(is_string($e->getCode()) || $e->getCode() == 0) {
-                return sendResponse(false, __('users.login_exception'), null, $e->__toString(), 500);
+                return sendResponse(false, __('users.login_exception'), null, "", 500);
             }
-            return sendResponse(false, $e->getMessage(), null, $e->__toString(), $e->getCode());
+            return sendResponse(false, $e->getMessage(), null, "", $e->getCode());
         }
     }
 
