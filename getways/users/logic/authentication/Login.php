@@ -26,10 +26,10 @@ class Login
         return [$loginType => $login_data['login_data'], 'password' => $login_data['password']];
     }
 
-    private function getUserAttemptToLogin($credentials, $rols)
+    private function getUserAttemptToLogin($credentials)
     {
         $loginType = key($credentials);
-        return $this->getUserRepo()->getUserByLoginData($loginType, $credentials, $rols);
+        return $this->getUserRepo()->getUserByLoginData($loginType, $credentials);
     }
 
     private function permitUserToLogin($user)
@@ -61,7 +61,7 @@ class Login
     {
         try {
             $credentials = $this->prepareLoginCredentials($data);
-            $user = $this->getUserAttemptToLogin($credentials, [User::STORE_ROLE, User::USER_ROLE]);
+            $user = $this->getUserAttemptToLogin($credentials);
             if(!$user) {
                 throw new Exception(__('Invalid login data.'), 403);
             }
@@ -96,7 +96,7 @@ class Login
     {
         try {
             $credentials = $this->prepareLoginCredentials($data);
-            $admin = $this->getUserAttemptToLogin($credentials, [User::ADMIN_ROLE]);
+            $admin = $this->getUserAttemptToLogin($credentials);
             if(!$admin) {
                 throw new Exception(__('Invalid login data.'), 403);
             }

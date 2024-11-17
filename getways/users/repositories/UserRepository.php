@@ -25,10 +25,10 @@ class UserRepository
         return $user->delete();
     }
 
-    public function getUserByLoginData($loginType, $credentials, $rols)
+    public function getUserByLoginData($loginType, $credentials)
     {
         $countryId = config('app.country_id');
-        return User::where($loginType, $credentials[$loginType])->where('country_id', $countryId)->whereIn('role_id', $rols)->first();
+        return User::where($loginType, $credentials[$loginType])->where('country_id', $countryId)->first();
     }
 
     public function get_user_dataByEmail($email,$country_id)
