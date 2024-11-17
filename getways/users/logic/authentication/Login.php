@@ -44,16 +44,17 @@ class Login
         //                ],500)
         //            ];
         //        }
-        if($user->email_verified_at == null) {
-            throw new Exception(__("Kindly confirm your email address."), 401);
-        }
+        if($user->role_id != User::STORE_ROLE || $user->role_id != User::USER_ROLE)
+            throw new Exception(__("Not authorized to visit this page."), 401);
 
-        if(!$user->status) {
+        if($user->email_verified_at == null)
+            throw new Exception(__("Kindly confirm your email address."), 401);
+
+        if(!$user->status)
             throw new Exception(__("Your account is still waiting to be activated by the administrator."), 401);
-        }
-        if($user->block) {
+
+        if($user->block)
             throw new Exception(__("Your account is blocked by the administrator because "), 401);
-        }
     }
     
     public function login(array $data)
@@ -83,6 +84,9 @@ class Login
 
     private function permitAdminToLogin($admin)
     {
+        if($admin->role_id != User::ADMIN_ROLE)
+            throw new Exception(__("Not authorized to visit this page."), 401);
+
         if(!$admin->status) {
             throw new Exception(__("Sorry, your account has been suspended by the admin."), 401);
         }
