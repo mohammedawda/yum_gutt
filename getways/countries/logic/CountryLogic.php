@@ -1,20 +1,21 @@
 <?php
 
-namespace getways\cores\logic;
+namespace getways\countries\logic;
 
 use Exception;
-use getways\cores\repositories\CityRepository;
-use getways\cores\resources\CityResource;
+use getways\countries\repositories\CountryRepository;
+use getways\countries\resources\CityResource;
+use getways\countries\resources\CountryResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
-class CityLogic
+class CountryLogic
 {
     public $resource = CityResource::class;
     public $repository ;
-    public function __construct(private readonly CityRepository $cityRepository)
+    public function __construct(private readonly CountryRepository $countryRepository)
     {
-        $this->repository = $this->cityRepository;
+        $this->repository = $this->countryRepository;
     }
     public function index($request)
     {
@@ -103,6 +104,18 @@ class CityLogic
             $em = $e->getMessage() . ' ' . $e->getFile() . '  ' . $e->getLine();
             Log::debug($em);
             return sendResponse(false, __('delete_cities_exception'), null, $em, 500);
+        }
+    }
+
+    public function countries($request)
+    {
+        try {
+            $criteria = $this->repository->countries($request);
+            return sendListResponse(true, __('All countries'), $criteria['count'], $criteria['total'], $criteria['last_page'], CountryResource::collection($criteria['list']));
+        } catch (Exception $e) {
+            $em = $e->getMessage() . ' ' . $e->getFile() . '  ' . $e->getLine();
+            Log::debug($em);
+            return sendResponse(false, __('countries_exception'), null, $em, 500);
         }
     }
 

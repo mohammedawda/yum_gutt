@@ -1,6 +1,6 @@
 <?php
 
-namespace getways\cores\controllers;
+namespace getways\cities\controllers;
 
 use App\Http\Controllers\Controller;
 use getways\cores\requests\CreateCityRequest;
@@ -47,4 +47,8 @@ class CityController extends Controller
         return loadGetway('cores')->for_cities($data,'Destroy');
     }
 
+    public function cities(Request $request)
+    {
+        return loadGetway('cities')->cities($request->all());
+    }
 }

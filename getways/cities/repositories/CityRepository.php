@@ -1,14 +1,8 @@
 <?php
 
-namespace getways\cores\repositories;
+namespace getways\cities\repositories;
 
-use getways\cores\models\City;
-use getways\cores\models\Country;
-use getways\cores\models\PaymentMethodGroup;
-use getways\users\models\User;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Hash;
-
+use getways\cities\models\City;
 class CityRepository
 {
     public $model = City::class;
@@ -90,4 +84,8 @@ class CityRepository
         }
     }
 
+    public function cities($request)
+    {
+        return getTakedPreparedCollection($this->model::where('status', 1), $request);
+    }
 }

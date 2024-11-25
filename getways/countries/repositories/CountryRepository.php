@@ -1,15 +1,11 @@
 <?php
 
-namespace getways\cores\repositories;
+namespace getways\countries\repositories;
 
-use getways\cores\models\City;
-use getways\cores\models\Country;
-use getways\cores\models\PaymentMethodGroup;
-use getways\users\models\User;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Hash;
+use getways\countries\models\City;
+use getways\countries\models\Country;
 
-class CityRepository
+class CountryRepository
 {
     public $model = City::class;
     public function index($request)
@@ -89,5 +85,9 @@ class CityRepository
             $record['record']->delete();
         }
     }
-
+    
+    public function countries($request)
+    {
+        return getTakedPreparedCollection(Country::where('status', 1), $request);
+    }
 }

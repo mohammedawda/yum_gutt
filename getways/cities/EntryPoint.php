@@ -1,12 +1,9 @@
 <?php
 
-namespace getways\cores;
+namespace getways\cities;
 
-use getways\cores\logic\CityLogic;
-use getways\cores\logic\GeneralLogic;
-use getways\cores\repositories\CityRepository;
-use getways\cores\repositories\GeneralRepository;
-
+use getways\cities\logic\CityLogic;
+use getways\cities\repositories\CityRepository;
 class EntryPoint
 {
     public $cities_obj;
@@ -17,7 +14,7 @@ class EntryPoint
     
     public function cities($request)
     {
-        $cities_obj = new GeneralLogic(new GeneralRepository());
+        $cities_obj = new CityLogic(new CityRepository());
         return $cities_obj->cities($request);
     }
 

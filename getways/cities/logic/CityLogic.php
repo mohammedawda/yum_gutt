@@ -1,13 +1,12 @@
 <?php
 
-namespace getways\cores\logic;
+namespace getways\cities\logic;
 
 use Exception;
-use getways\cores\repositories\CityRepository;
-use getways\cores\resources\CityResource;
+use getways\cities\repositories\CityRepository;
+use getways\cities\resources\CityResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-
 class CityLogic
 {
     public $resource = CityResource::class;
@@ -106,4 +105,17 @@ class CityLogic
         }
     }
 
+    
+    public function cities($request)
+    {
+        try {
+            $criteria = $this->repository->cities($request);
+
+            return sendListResponse(true, __('All cities'), $criteria['count'], $criteria['total'], $criteria['last_page'], CityResource::collection($criteria['list']));
+        } catch (Exception $e) {
+            $em = $e->getMessage() . ' ' . $e->getFile() . '  ' . $e->getLine();
+            Log::debug($em);
+            return sendResponse(false, __('cities_exception'), null, $em, 500);
+        }
+    }
 }

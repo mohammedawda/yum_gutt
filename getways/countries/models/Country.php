@@ -14,9 +14,4 @@ class Country extends Model
     {
         return $this->getTranslations('name')[app()->getLocale()] ?? '';
     }
-
-    public function getImageUrlAttribute()
-    {
-        return ExistsImage($this->image);
-    }
 }

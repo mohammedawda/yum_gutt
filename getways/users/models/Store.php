@@ -21,7 +21,7 @@ class Store extends Model
     /********************************************* relations *********************************************/
     public function followers()
     {
-        return $this->hasMany(StoreFollower::class, 'store_id');
+        return $this->hasMany(Follower::class, 'store_id');
     }
 
     public function storeReels()

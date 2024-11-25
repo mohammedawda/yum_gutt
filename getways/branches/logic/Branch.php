@@ -18,7 +18,7 @@ class Branch
         try {
             $criteria = $this->branchRepository->index($request);
 
-            return sendListResponse(true, __('All branches'), $criteria['count'], $criteria['total'], BranchResource::collection($criteria['list']));
+            return sendListResponse(true, __('All branches'), $criteria['count'], $criteria['total'], $criteria['last_page'], BranchResource::collection($criteria['list']));
         } catch (Exception $e) {
             $em = $e->getMessage() . ' ' . $e->getFile() . '  ' . $e->getLine();
             Log::debug($em);

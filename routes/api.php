@@ -1,5 +1,7 @@
 <?php
 
+use getways\cities\controllers\CityController;
+use getways\countries\controllers\CountryController;
 use getways\settings\controllers\SettingController;
 use getways\users\controllers\AuthController;
 use getways\users\controllers\UsersController;
@@ -30,7 +32,8 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/admin_logout', 'admin_logout')->middleware('auth:api');
 });
 Route::get('/settings', [SettingController::class, 'setting']);
-
+Route::get('/cities', [CityController::class, 'cities']);
+Route::get('/countries', [CountryController::class, 'countries']);
 Route::prefix('store')->group(function () {
     // Route::get('/branches', [UsersController::class, 'branches']);
     require __DIR__ . '/store.php';

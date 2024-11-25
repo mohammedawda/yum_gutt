@@ -8,7 +8,7 @@ if (!function_exists('loadGetway')) {
             if (class_exists($class_name)) {
                 return new $class_name;
             } else {
-                throw new \Exception(__('api.getway_not_found'));
+                throw new \Exception(__('Getway not Found'));
             }
         } catch (\Exception $ex) {
             throw new \Exception($ex->getMessage()); // Proper exception handling
