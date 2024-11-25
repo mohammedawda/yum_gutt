@@ -36,6 +36,7 @@ class CreateUserRequest extends FormRequest
             'phone'                 => 'required|unique:users',
             'password'              => ['required', 'string', 'min:8', 'confirmed'],
             'fcm'                   => 'nullable',
+            'role_id'               => 'required|in:1,2,3',
             'country_code'          => 'required|string',
             'status'                => 'nullable|boolean',
             'block'                 => 'nullable|boolean',
