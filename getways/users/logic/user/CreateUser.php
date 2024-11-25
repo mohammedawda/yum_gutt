@@ -56,7 +56,7 @@ class CreateUser extends BaseUser
 
     private function processCreateUserExtensions($user, $data)
     {
-        if($user->role_id == User::USER_ROLE)
+        if($user->role_id == User::USER_ROLE || $user->role_id == User::ADMIN_ROLE)
             return true;
     
         elseif($user->role_id == User::STORE_ROLE)
@@ -82,6 +82,13 @@ class CreateUser extends BaseUser
         if($data['role_id'] == 2)
             return $this->prepareStoreUserData($data);
 
-        return [];
+        return $this->preparedCreateUserData($data);
+    }
+
+    private function preparedCreateUserData(&$data)
+    {
+        unset($data['national_id_photo']);
+        unset($data['national_id_photo_type']);
+        unset($data['national_id']);
     }
 }
