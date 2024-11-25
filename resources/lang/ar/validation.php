@@ -246,6 +246,7 @@ return array(
         'main_category_id'       => 'كود القسم الرئيسى',
         'national_id_photo'       => 'صورة الهوية القومية',
         'national_id_photo_type'       => 'نوع صورة الهوية القومية',
+        'profile_photo' => 'صورة الصفحة الشخصية',
         'national_id'       => 'رقم الهوية',
         'country_id'       => 'الدولة',
         'terms_and_condition'       => 'الموافقة على الشروط والاحكام',
