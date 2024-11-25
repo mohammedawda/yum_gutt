@@ -81,6 +81,11 @@ class EntryPoint
         return (new ListUsers(new UserRepository()))->allStores($filter);
     }
 
+    public function allAdmins($filter)
+    {
+        return (new ListUsers(new UserRepository()))->allAdmins($filter);
+    }
+
     public function allUsers($filter)
     {
         return (new ListUsers(new UserRepository()))->allUsers($filter);

@@ -95,6 +95,11 @@ class User extends Authenticatable
     {
         return $query->where('role_id', User::USER_ROLE);
     }
+
+    public function scopeAllAdmins($query)
+    {
+        return $query->where('role_id', User::ADMIN_ROLE);
+    }
     /********************************************* relations *********************************************/
     public function City(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {

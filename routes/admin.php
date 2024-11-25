@@ -26,6 +26,7 @@ Route::middleware([AdminMiddleware::class])->group(function () {
         Route::get('delete/user/{user_id}', 'deleteUser');
         Route::get('/stores/all', 'allStores');
         Route::get('/users/all', 'allUsers');
+        Route::get('/admins/all', 'allAdmins');
         Route::post('/user/block/{id}', 'block');
         Route::get('/user/active/{id}', 'active');
     });

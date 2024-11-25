@@ -36,6 +36,11 @@ class UsersController extends Controller
         return loadGetway('users')->allUsers($request->all());
     }
 
+    public function allAdmins(Request $request)
+    {
+        return loadGetway('users')->allAdmins($request->all());
+    }
+
     public function deleteUser($userId)
     {
         return loadGetway('users')->deleteUser($userId);
