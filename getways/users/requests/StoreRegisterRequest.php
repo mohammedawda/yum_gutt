@@ -5,8 +5,8 @@ namespace getways\users\requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
-
-class StoreRegisterRequest extends CreateUserRequest
+use Illuminate\Validation\Rule;
+class StoreRegisterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,11 +23,23 @@ class StoreRegisterRequest extends CreateUserRequest
      */
     public function rules(): array
     {
-        $rules = Parent::rules();
-        $rules['national_id_photo']      = "required|image";
-        $rules['national_id_photo_type'] = "required|string|in:1,2";
-        $rules['national_id']            = "required|string";
-        return $rules;
+        return [
+            'name'                  => 'nullable|string',
+            'country_id'            => ['required', Rule::exists('countries', 'id')->where('countries.deleted_at', null)],
+            'city_id'               => ['required', Rule::exists('cities', 'id')->where('cities.deleted_at', null)],
+            'national_id_photo'     => 'required|image|mimes:png,jpg,jpeg',
+            'national_id_photo_type'=> 'required|string|in:1,2',
+            'national_id'           => 'required|string',
+            'profile_photo'         => 'required|image|mimes:png,jpg,jpeg',
+            'email'                 => 'required|email|unique:users',
+            'phone'                 => 'required|unique:users',
+            'password'              => ['required', 'string', 'min:8', 'confirmed'],
+            'fcm'                   => 'nullable',
+            'country_code'          => 'required|string',
+            'status'                => 'nullable|boolean',
+            'block'                 => 'nullable|boolean',
+            'terms_and_condition'   => "required|in:0,1",
+        ];
     }
 
 

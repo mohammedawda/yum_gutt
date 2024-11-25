@@ -4,7 +4,7 @@ namespace getways\users\requests;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
-
+use Illuminate\Validation\Rule;
 class UserRegisterRequest extends CreateUserRequest
 {
     /**
@@ -22,7 +22,20 @@ class UserRegisterRequest extends CreateUserRequest
      */
     public function rules(): array
     {
-        return Parent::rules();
+        return [
+            'name'                  => 'nullable|string',
+            'country_id'            => ['required', Rule::exists('countries', 'id')->where('countries.deleted_at', null)],
+            'city_id'               => ['required', Rule::exists('cities', 'id')->where('cities.deleted_at', null)],
+            'profile_photo'         => 'required|image|mimes:png,jpg,jpeg',
+            'email'                 => 'required|email|unique:users',
+            'phone'                 => 'required|unique:users',
+            'password'              => ['required', 'string', 'min:8', 'confirmed'],
+            'fcm'                   => 'nullable',
+            'country_code'          => 'required|string',
+            'status'                => 'nullable|boolean',
+            'block'                 => 'nullable|boolean',
+            'terms_and_condition'   => "required|in:0,1",
+        ];
     }
 
 
