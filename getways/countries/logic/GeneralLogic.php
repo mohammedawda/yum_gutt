@@ -41,7 +41,7 @@ class GeneralLogic
         try {
             $criteria = $this->generalRepository->cities($request);
 
-            return sendListResponse(true, __('All cities'), $criteria['count'], $criteria['total'], CityResource::collection($criteria['list']));
+            return sendListResponse(true, __('All cities'), $criteria['count'], $criteria['total'], $criteria['last_page'], CityResource::collection($criteria['list']));
         } catch (Exception $e) {
             $em = $e->getMessage() . ' ' . $e->getFile() . '  ' . $e->getLine();
             Log::debug($em);
@@ -55,7 +55,7 @@ class GeneralLogic
         try {
             $criteria = $this->generalRepository->countries($request);
 
-            return sendListResponse(true, __('All countries'), $criteria['count'], $criteria['total'], CountryResource::collection($criteria['list']));
+            return sendListResponse(true, __('All countries'), $criteria['count'], $criteria['total'], $criteria['last_page'], CountryResource::collection($criteria['list']));
         } catch (Exception $e) {
             $em = $e->getMessage() . ' ' . $e->getFile() . '  ' . $e->getLine();
             Log::debug($em);

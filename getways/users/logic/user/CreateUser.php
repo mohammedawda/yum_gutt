@@ -16,10 +16,10 @@ class CreateUser extends BaseUser
     {
         try {
             $this->uploadUserImages($data);
-            $this->prepareCreateUser($data);
+            $storeData = $this->prepareCreateUser($data);
             DB::beginTransaction();
             $user = $this->userRepository->create_user($data);
-            $this->processCreateUserExtensions($user, $data);
+            $this->processCreateUserExtensions($user, $storeData);
             DB::commit();
             if (Request()->url() == route('register')) {
                 $email_data = $this->prepareEmailedCreatedUser($user);
@@ -43,6 +43,7 @@ class CreateUser extends BaseUser
         $data['password_str'] = $password;
         $data['phone']        = removeFirstZeroFromPhone($data['phone']);
         $data['full_phone']   = $data['country_code'].$data['phone'];
+        return $this->prepareUserExtensions($data);
     }
 
     private function prepareEmailedCreatedUser($user)
@@ -55,11 +56,32 @@ class CreateUser extends BaseUser
 
     private function processCreateUserExtensions($user, $data)
     {
-        if($user->role_id == User::USER_ROLE) {
+        if($user->role_id == User::USER_ROLE)
             return true;
-        } elseif($user->role_id == User::STORE_ROLE) {
+    
+        elseif($user->role_id == User::STORE_ROLE)
             return loadGetway('stores')->createStoreExtension($user, $data);
-        }
+
         throw new Exception(__('Invalid user role'), 400);
+    }
+
+    private function prepareStoreUserData(&$data)
+    {
+        return [
+            'national_id_photo'      => Arr::pull($data, 'national_id_photo'),
+            'national_id_photo_type' => Arr::pull($data, 'national_id_photo_type'),
+            'national_id'            => Arr::pull($data, 'national_id'),
+        ];
+    }
+
+    private function prepareUserExtensions(&$data)
+    {
+        if(!array_key_exists('role_id', $data))
+            throw new Exception(__('Invalid user role'), 400);
+
+        if($data['role_id'] == 2)
+            return $this->prepareStoreUserData($data);
+
+        return [];
     }
 }

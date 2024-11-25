@@ -125,4 +125,14 @@ class User extends Authenticatable
     {
         return $this->hasOne(Store::class);
     }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'user_id');
+    }
+
+    public function reels()
+    {
+        return $this->hasMany(Reel::class, 'owner_id');
+    }
 }

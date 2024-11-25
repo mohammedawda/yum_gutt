@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Store extends Model
 {
     use SoftDeletes;
+    const NATIONAL_ID_PHOTO_TYPE = [
+        'passport'    => 1 ,
+        'national_id' => 2,
+    ];
     /**
      * The attributes that are mass assignable.
      *
@@ -20,8 +24,18 @@ class Store extends Model
         return $this->hasMany(StoreFollower::class, 'store_id');
     }
 
-    public function videos()
+    public function storeReels()
     {
-        return $this->hasMany(StoreVideo::class, 'store_id');
+        return $this->hasMany(Reel::class, 'store_id');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'store_id');
+    }
+
+    public function reels()
+    {
+        return $this->hasMany(Reel::class, 'owner_id');
     }
 }

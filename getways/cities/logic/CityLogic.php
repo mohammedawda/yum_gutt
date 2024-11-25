@@ -21,7 +21,7 @@ class CityLogic
         try {
             $criteria = $this->repository->index($request);
 
-            return sendListResponse(true, __('All cities'), $criteria['count'], $criteria['total'], $this->resource::collection($criteria['list']));
+            return sendListResponse(true, __('All cities'), $criteria['count'], $criteria['total'], $criteria['last_page'], $this->resource::collection($criteria['list']));
         } catch (Exception $e) {
             $em = $e->getMessage() . ' ' . $e->getFile() . '  ' . $e->getLine();
             Log::debug($em);

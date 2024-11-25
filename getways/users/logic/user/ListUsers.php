@@ -3,15 +3,15 @@
 namespace getways\users\logic\user;
 
 use Exception;
+use getways\users\resources\AllStoresResource;
 use getways\users\resources\AllUsersResource;
-
 class ListUsers extends BaseUser
 {
     public function allStores($filter)
     {
         try {
-            $criteria = $this->userRepository->allUsers($filter, ['city', 'country'], 'AllStores');
-            return sendListResponse(true, __('All users'), $criteria['count'], $criteria['total'], $criteria['last_page'], AllUsersResource::collection($criteria['list']));
+            $criteria = $this->userRepository->allUsers($filter, ['city', 'country', 'store.orders:id', 'store.storeReels:id', 'store.reels:id'], [], 'AllStores');
+            return sendListResponse(true, __('All users'), $criteria['count'], $criteria['total'], $criteria['last_page'], AllStoresResource::collection($criteria['list']));
         } catch (Exception $e) {
             if(is_string($e->getCode()) || $e->getCode() == 0) {
                 return sendResponse(false, __('Sorry an error occured while displaying list stores, please try again later.'), null, $e->__toString(), 500);
@@ -23,7 +23,7 @@ class ListUsers extends BaseUser
     public function allUsers($filter)
     {
         try {
-            $criteria = $this->userRepository->allUsers($filter, ['city', 'country'], 'AllUsers');
+            $criteria = $this->userRepository->allUsers($filter, ['city', 'country'], ['orders', 'reels'], 'AllUsers');
             return sendListResponse(true, __('All users'), $criteria['count'], $criteria['total'], $criteria['last_page'], AllUsersResource::collection($criteria['list']));
         } catch (Exception $e) {
             if(is_string($e->getCode()) || $e->getCode() == 0) {

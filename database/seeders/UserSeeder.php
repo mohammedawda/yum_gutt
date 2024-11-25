@@ -41,5 +41,14 @@ class UserSeeder extends Seeder
                 'email_verified_at' => now(),
             ],
         ]);
+        DB::table('stores')->insert([
+            [
+                'user_id'                => 2,
+                'national_id_photo'      => null,
+                'national_id_photo_type' => null,
+                'national_id'            => null,
+                'is_open'                => 1,
+            ],
+        ]);
     }
 }

@@ -45,7 +45,7 @@ class UserRepository
         ]);
     }
 
-    public function allUsers($filter, $with = [], $userType)
+    public function allUsers($filter, $with = [], $withCount = [], $userType)
     {
         return getTakedPreparedCollection( 
             User::CountryId()->$userType()
@@ -70,7 +70,8 @@ class UserRepository
             ->when(!empty($filter['created_at_to']), function($query) use($filter) {
                 $query->whereDate('created_at', '>=', $filter['created_at_to']);
             })
-            ->with($with), $filter
+            ->with($with)
+            ->withCount($withCount), $filter
         );
     }
 

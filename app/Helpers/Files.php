@@ -27,14 +27,12 @@ if (!function_exists('FileDir')) {
         switch($dir) {
             case 'user_images':
                 return  $url . 'user_images/';
-                break;
             case 'profile_photo':
                 return $url . 'profile_photo/';
             case 'product_images':
                 return $url . 'product_images/';
             default:
                 return  $url . 'images';
-                break;
         }
     }
 }

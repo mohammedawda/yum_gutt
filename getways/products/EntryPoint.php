@@ -1,0 +1,39 @@
+<?php
+
+namespace getways\products;
+
+use getways\products\logic\CreateProduct;
+use getways\products\logic\menu;
+use getways\products\logic\ProductDestroy;
+use getways\products\logic\ProductDetails;
+use getways\products\logic\UpdateProduct;
+use getways\products\repositories\ProductRepository;
+
+class EntryPoint
+{
+    /************************************ products ************************************/
+    public function createProduct(array $productData)
+    {
+        return (new CreateProduct(new ProductRepository()))->createProduct($productData);
+    }
+
+    public function updateProduct($productId, array $productData)
+    {
+        return (new UpdateProduct(new ProductRepository()))->updateProduct($productId, $productData);
+    }
+
+    public function menu(array $filter)
+    {
+        return (new Menu(new ProductRepository()))->menu($filter);
+    }
+
+    public function findProduct($productId)
+    {
+        return (new ProductDetails(new ProductRepository()))->findProduct($productId);
+    }
+
+    public function deleteProduct($productId)
+    {
+        return (new ProductDestroy(new ProductRepository()))->deleteProduct($productId);
+    }
+}

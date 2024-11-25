@@ -28,18 +28,18 @@ class CreateUserRequest extends FormRequest
             'name'                  => 'nullable|string',
             'country_id'            => ['required', Rule::exists('countries', 'id')->where('countries.deleted_at', null)],
             'city_id'               => ['required', Rule::exists('cities', 'id')->where('cities.deleted_at', null)],
-            'national_id_photo'     => 'nullable|image|mimes:png,jpg,jpeg',
-            'national_id_photo_type'=> 'nullable|string|in:passport,national_id',
-            'national_id'           => 'required|string',
+            // 'national_id_photo'     => 'nullable|image|mimes:png,jpg,jpeg',
+            // 'national_id_photo_type'=> 'nullable|string|in:passport,national_id',
+            // 'national_id'           => 'required|string',
             'profile_photo'         => 'required|image|mimes:png,jpg,jpeg',
             'email'                 => 'required|email|unique:users',
             'phone'                 => 'required|unique:users',
             'password'              => ['required', 'string', 'min:8', 'confirmed'],
             'fcm'                   => 'nullable',
             'country_code'          => 'required|string',
-            'role_id'               => 'required|in:1,2,3',
             'status'                => 'nullable|boolean',
-            'block'                 => 'nullable|boolean'
+            'block'                 => 'nullable|boolean',
+            'terms_and_condition'   => "required|in:0,1",
         ];       
     }
 

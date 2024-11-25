@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('city_id')->constrained('cities')->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->foreignId('action_by')->nullable()->constrained('users')->nullOnDelete()->cascadeOnDelete();
             $table->string('name');
+            $table->json('description')->nullable();
             $table->string('email')->unique();
             $table->string('phone')->nullable();
             $table->string('country_code')->nullable();
@@ -24,9 +25,6 @@ return new class extends Migration
             $table->integer('role_id');
             $table->string('otp')->nullable();
             $table->timestamp('latest_sent_otp')->nullable();
-            $table->string('national_id_photo')->nullable();
-            $table->string('national_id_photo_type')->nullable();
-            $table->string('national_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('password_str');
@@ -41,6 +39,7 @@ return new class extends Migration
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
             $table->softDeletes();
+            $table->index(['country_id', 'city_id', 'action_by']);
         });
     }
 

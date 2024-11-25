@@ -16,12 +16,12 @@ class StoreProfileResource extends JsonResource
     {
         $storeCounts = $this->store()->withCount('followers')->withCount('videos');
         return [
-            'id'           => $this->id,
-            'name'         => $this->name,
-            'ProfilePhoto' => $this->profile_photo ?? null,
-            'description'  => $this->description ?? null,
-            'followers'    => $storeCounts->followers_count ?? 0,
-            'vidoes'       => $storeCounts->videos_count ?? 0,
+            'id'            => $this->id,
+            'name'          => $this->name,
+            'profile_photo' => $this->profile_photo ?? null,
+            'description'   => $this->description ?? null,
+            'followers'     => $storeCounts->followers_count ?? 0,
+            'vidoes'        => $storeCounts->videos_count ?? 0,
         ];
     }
 }

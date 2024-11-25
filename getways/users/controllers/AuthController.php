@@ -5,12 +5,11 @@ namespace getways\users\controllers;
 use App\Http\Controllers\Controller;
 use getways\users\requests\ChangePasswordRequest;
 use getways\users\requests\LoginRequest;
-use getways\users\requests\RegisterRequest;
+use getways\users\requests\StoreRegisterRequest;
+use getways\users\requests\UserRegisterRequest;
 use getways\users\requests\ResetRequest;
 use getways\users\requests\SendVerifyRequest;
 use getways\users\requests\VerifyRequest;
-use Illuminate\Http\Request;
-
 class AuthController extends Controller
 {
     public function login(LoginRequest $request)
@@ -23,9 +22,18 @@ class AuthController extends Controller
         return loadGetway('users')->admin_login($request->validated());
     }
     
-    public function register(RegisterRequest $request)
+    public function storeRegister(StoreRegisterRequest $request)
     {
-        return loadGetway('users')->register($request->validated());
+        $validated = $request->validated();
+        $validated['role_id'] = 2;
+        return loadGetway('users')->register($validated);
+    }
+
+    public function userRegister(UserRegisterRequest $request)
+    {
+        $validated = $request->validated();
+        $validated['role_id'] = 3;
+        return loadGetway('users')->register($validated);
     }
 
     public function reset(ResetRequest $request)
