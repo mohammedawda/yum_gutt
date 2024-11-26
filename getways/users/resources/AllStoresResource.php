@@ -13,6 +13,7 @@ class AllStoresResource extends JsonResource
             'id'            => $this->id,
             'number'        => $this->store?->serial_number,
             'name'          => $this->name,
+            'full_phone'    => $this->full_phone,
             'profile_photo' => $this->profile_photo,
             'role_id'       => $this->role_id,
             'reviews'       => $this->store?->reviews_avg_review ?? 0,

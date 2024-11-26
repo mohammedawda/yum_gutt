@@ -59,7 +59,7 @@ class UserRepository
                 $query->where('email', 'LIKE', '%' . $filter['email'] . '%');
             })
             ->when(!empty($filter['phone']), function($query) use($filter) {
-                $query->where('phone', 'LIKE', '%' . $filter['phone'] . '%');
+                $query->where('full_phone', 'LIKE', '%' . $filter['phone'] . '%');
             })
             ->when(!empty($filter['created_at_from']), function($query) use($filter) {
                 $query->whereDate('created_at', '>=', $filter['created_at_from']);
@@ -96,7 +96,7 @@ class UserRepository
                 $query->where('email', 'LIKE', '%' . $filter['email'] . '%');
             })
             ->when(!empty($filter['phone']), function($query) use($filter) {
-                $query->where('phone', 'LIKE', '%' . $filter['phone'] . '%');
+                $query->where('full_phone', 'LIKE', '%' . $filter['phone'] . '%');
             })
             ->when(!empty($filter['created_at_from']), function($query) use($filter) {
                 $query->whereDate('created_at', '>=', $filter['created_at_from']);
