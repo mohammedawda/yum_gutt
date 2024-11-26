@@ -17,4 +17,16 @@ return new class extends Migration
             });
         }
     }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        if(Schema::hasColumn('users', 'profile_photo')) {
+            Schema::table('users', function (Blueprint $table) {
+                $table->dropColumn('profile_photo');
+            });
+        }
+    }
 };

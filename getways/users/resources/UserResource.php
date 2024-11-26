@@ -22,7 +22,7 @@ class UserResource extends JsonResource
             'store'                 => $this->store ? new StoreDataResource($this->store) : null,
             'wallet'                => $this->wallet,
             'fcm'                   => $this->fcm,
-            'created_at'            => $this->created_at->toFormattedDateString(),
+            'created_at'            => $this->created_at,
             'status'                => $this->status ?? '0',
             'block'                 => $this->block ?? '0',
             'block_reason'          => $this->block_reason,

@@ -11,9 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if(!Schema::hasColumn('stores', 'locations')) {
+        if(!Schema::hasColumn('stores', 'location')) {
             Schema::table('stores', function (Blueprint $table) {
-                $table->string('locations')->after('national_id')->nullable();
+                $table->string('location')->after('national_id')->nullable();
+            });
+        }
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        if(Schema::hasColumn('stores', 'location')) {
+            Schema::table('stores', function (Blueprint $table) {
+                $table->dropColumn('location');
             });
         }
     }

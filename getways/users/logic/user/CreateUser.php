@@ -71,6 +71,7 @@ class CreateUser extends BaseUser
             'national_id_photo'      => Arr::pull($data, 'national_id_photo'),
             'national_id_photo_type' => Arr::pull($data, 'national_id_photo_type'),
             'national_id'            => Arr::pull($data, 'national_id'),
+            'location'               => Arr::pull($data, 'location'),
         ];
     }
 
@@ -90,5 +91,6 @@ class CreateUser extends BaseUser
         unset($data['national_id_photo']);
         unset($data['national_id_photo_type']);
         unset($data['national_id']);
+        unset($data['location']);
     }
 }
