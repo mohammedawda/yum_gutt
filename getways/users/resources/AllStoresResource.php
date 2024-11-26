@@ -11,6 +11,7 @@ class AllStoresResource extends JsonResource
     {
         return [
             'id'            => $this->id,
+            'number'        => $this->store?->serial_number,
             'name'          => $this->name,
             'profile_photo' => $this->profile_photo,
             'role_id'       => $this->role_id,

@@ -49,9 +49,6 @@ class UserRepository
     {
         return getTakedPreparedCollection( 
             User::CountryId()->$userType()
-            ->when(isset($filter['national_id']), function($query) use($filter) {
-                $query->where('national_id', 'LIKE', '%' . $filter['national_id'] . '%');
-            })
             ->when(isset($filter['status']), function($query) use($filter){
                 $query->where('status', $filter['status']);
             })
@@ -79,6 +76,11 @@ class UserRepository
     {
         return getTakedPreparedCollection( 
             User::CountryId()->AllStores()
+            ->when(isset($filter['number']), function($query) use($filter) {
+                $query->whereHas('store', function($query) use($filter) {
+                    $query->where('serial_number', 'LIKE', '%' . $filter['number'] . '%');
+                });
+            })
             ->when(isset($filter['national_id']), function($query) use($filter) {
                 $query->whereHas('store', function($query) use($filter) {
                     $query->where('national_id', 'LIKE', '%' . $filter['national_id'] . '%');
