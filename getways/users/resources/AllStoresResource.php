@@ -20,8 +20,8 @@ class AllStoresResource extends JsonResource
             'location'      => $this->store?->locations ?? null,
             'city'          => !is_null($this->city) ? new CityResource($this->city) : [],
             'country'       => !is_null($this->country) ? new CountryResource($this->country) : [],
-            # TODO::set cashback to 0 until handling it
-            'cashback'      => 0,
+            # TODO::set total_revenue to 0 until handling it
+            'total_revenue' => 0,
             'join_date'     => $this->created_at,
         ];
     }
