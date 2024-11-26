@@ -13,7 +13,7 @@ return new class extends Migration
     {
         if(!Schema::hasColumn('stores', 'serial_number')) {
             Schema::table('stores', function (Blueprint $table) {
-                $table->bigInteger('serial_number')->after('id')->unique()->nullable();
+                $table->bigInteger('serial_number')->after('id')->unique();
             });
         }
     }
