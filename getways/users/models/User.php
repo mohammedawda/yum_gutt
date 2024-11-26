@@ -3,6 +3,8 @@
 namespace getways\users\models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -51,6 +53,11 @@ class User extends Authenticatable
     public function getProfilePhotoAttribute($value)
     {
         return !is_null($value) ? GetFile(FileDir('profile_photo').$value) : null;
+    }
+
+    public function getCreatedAtAttribute($value)
+    {
+        return !is_null($value) ? Carbon::parse($value)->format('Y-m-d') : null;
     }
 
     public function deposit_wallet($amount,$desc)

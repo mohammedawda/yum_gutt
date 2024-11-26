@@ -24,6 +24,11 @@ class Store extends Model
         return $this->hasMany(Follower::class, 'store_id');
     }
 
+    public function reviews()
+    {
+        return $this->hasMany(StoreReview::class, 'store_id');
+    }
+
     public function storeReels()
     {
         return $this->hasMany(Reel::class, 'store_id');
@@ -32,6 +37,11 @@ class Store extends Model
     public function orders()
     {
         return $this->hasMany(Order::class, 'store_id');
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'store_id');
     }
 
     public function reels()

@@ -11,7 +11,7 @@ class ListUsers extends BaseUser
     public function allStores($filter)
     {
         try {
-            $criteria = $this->userRepository->allUsers($filter, ['city', 'country', 'store.orders:id', 'store.storeReels:id', 'store.reels:id'], [], 'AllStores');
+            $criteria = $this->userRepository->allStores($filter);
             return sendListResponse(true, __('All stores'), $criteria['count'], $criteria['total'], $criteria['last_page'], AllStoresResource::collection($criteria['list']));
         } catch (Exception $e) {
             if(is_string($e->getCode()) || $e->getCode() == 0) {

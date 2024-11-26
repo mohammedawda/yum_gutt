@@ -68,10 +68,44 @@ class UserRepository
                 $query->whereDate('created_at', '>=', $filter['created_at_from']);
             })
             ->when(!empty($filter['created_at_to']), function($query) use($filter) {
-                $query->whereDate('created_at', '>=', $filter['created_at_to']);
+                $query->whereDate('created_at', '<=', $filter['created_at_to']);
             })
             ->with($with)
             ->withCount($withCount), $filter
+        );
+    }
+
+    public function allStores($filter)
+    {
+        return getTakedPreparedCollection( 
+            User::CountryId()->AllStores()
+            ->when(isset($filter['national_id']), function($query) use($filter) {
+                $query->whereHas('store', function($query) use($filter) {
+                    $query->where('national_id', 'LIKE', '%' . $filter['national_id'] . '%');
+                });
+            })
+            ->when(isset($filter['status']), function($query) use($filter){
+                $query->where('status', $filter['status']);
+            })
+            ->when(!empty($filter['name']), function($query) use($filter) {
+                $query->where('name', 'LIKE', '%' . $filter['name'] . '%');
+            })
+            ->when(!empty($filter['email']), function($query) use($filter) {
+                $query->where('email', 'LIKE', '%' . $filter['email'] . '%');
+            })
+            ->when(!empty($filter['phone']), function($query) use($filter) {
+                $query->where('phone', 'LIKE', '%' . $filter['phone'] . '%');
+            })
+            ->when(!empty($filter['created_at_from']), function($query) use($filter) {
+                $query->whereDate('created_at', '>=', $filter['created_at_from']);
+            })
+            ->when(!empty($filter['created_at_to']), function($query) use($filter) {
+                $query->whereDate('created_at', '<=', $filter['created_at_to']);
+            })
+            ->with(['city', 'country', 'store' => function($query) {
+                $query->withCount(['orders', 'products'])
+                      ->withAvg('reviews', 'review');
+            }]), $filter
         );
     }
 
