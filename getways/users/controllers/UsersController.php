@@ -26,6 +26,12 @@ class UsersController extends Controller
         return loadGetway('users')->userFind($userId);
     }
 
+    public function loggedAdmin()
+    {
+        $userId = Auth::user()->id;
+        return loadGetway('users')->userFind($userId);
+    }
+
     public function allStores(Request $request)
     {
         return loadGetway('users')->allStores($request->all());

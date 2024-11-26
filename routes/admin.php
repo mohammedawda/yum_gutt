@@ -27,6 +27,7 @@ Route::middleware([AdminMiddleware::class])->group(function () {
         Route::get('/stores/all', 'allStores');
         Route::get('/users/all', 'allUsers');
         Route::get('/admins/all', 'allAdmins');
+        Route::get('/logged', 'loggedAdmin');
         Route::post('/user/block/{id}', 'block');
         Route::get('/user/active/{id}', 'active');
     });
