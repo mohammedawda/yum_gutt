@@ -33,7 +33,7 @@ class CreateUserRequest extends FormRequest
             'national_id_photo_type'=> 'required_if:role_id,==,2|in:1,2',
             'national_id'           => 'required_if:role_id,==,2|string',
             'location'              => 'required_if:role_id,==,2|string',
-            'profile_photo'         => 'required|image|mimes:png,jpg,jpeg',
+            'profile_photo'         => 'nullable|image|mimes:png,jpg,jpeg',
             'email'                 => 'required|email|unique:users',
             'phone'                 => 'required|unique:users',
             'password'              => ['required', 'string', 'min:8', 'confirmed'],

@@ -26,7 +26,7 @@ class UserRegisterRequest extends CreateUserRequest
             'name'                  => 'nullable|string',
             'country_id'            => ['required', Rule::exists('countries', 'id')->where('countries.deleted_at', null)],
             'city_id'               => ['required', Rule::exists('cities', 'id')->where('cities.deleted_at', null)],
-            'profile_photo'         => 'required|image|mimes:png,jpg,jpeg',
+            'profile_photo'         => 'nullable|image|mimes:png,jpg,jpeg',
             'email'                 => 'required|email|unique:users',
             'phone'                 => 'required|unique:users',
             'password'              => ['required', 'string', 'min:8', 'confirmed'],

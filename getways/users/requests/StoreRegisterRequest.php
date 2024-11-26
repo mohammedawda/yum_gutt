@@ -31,7 +31,7 @@ class StoreRegisterRequest extends FormRequest
             'national_id_photo_type'=> 'required|string|in:1,2',
             'national_id'           => 'required|string',
             'location'              => 'required|string',
-            'profile_photo'         => 'required|image|mimes:png,jpg,jpeg',
+            'profile_photo'         => 'nullable|image|mimes:png,jpg,jpeg',
             'email'                 => 'required|email|unique:users',
             'phone'                 => 'required|unique:users',
             'password'              => ['required', 'string', 'min:8', 'confirmed'],
