@@ -23,6 +23,6 @@ class CreateStore
     private function prepareExtensionData($userId, &$data)
     {
         $data['user_id']       = $userId;
-        $data['serial_number'] = (int)(rand(100000, 999999).$userId);
+        $data['serial_number'] = (rand(100000, 999999).'-'.$userId);
     }
 }
