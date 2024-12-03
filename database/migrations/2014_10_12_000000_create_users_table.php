@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('country_code')->nullable();
             $table->string('full_phone')->nullable();
-            $table->integer('role_id');
+            $table->integer('role_id')->comment('1=>admin, 2=>store, 3=>user');
             $table->string('otp')->nullable();
             $table->timestamp('latest_sent_otp')->nullable();
             $table->timestamp('email_verified_at')->nullable();

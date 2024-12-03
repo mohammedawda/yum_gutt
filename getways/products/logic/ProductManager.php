@@ -4,6 +4,7 @@ namespace getways\products\logic;
 
 use Exception;
 use getways\products\repositories\ProductRepository;
+use Illuminate\Support\Arr;
 
 class ProductManager
 {
@@ -11,17 +12,19 @@ class ProductManager
     {
     }
 
-    protected function checkProductKeys($productData)
+    protected function handelPriceSizeProduct($data,$product): void
     {
-        if(!array_key_exists('small_price', $productData) && !array_key_exists('medium_price', $productData) && !array_key_exists('large_price', $productData)) {
-            throw new Exception(('Missed product price'), 400);
-        }
+        $sizesData = collect($data)->mapWithKeys(function ($item) {
+            return [$item['id'] => ['price' => $item['price']]];
+        })->toArray();
+        $product->sizes()->sync($sizesData);
     }
 
     protected function appendImageOfProduct(&$productData)
     {
         if (array_key_exists('image', $productData) && !is_null($productData['image'])) {
-            $productData['image'] = upload($productData['image'], 'product_images');
+            $image = Arr::pull($productData, 'image');
+            $productData['image'] = upload($image, 'product_images');
         }
     }
 

@@ -13,14 +13,12 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->constrained('categories')->onDelete('CASCADE')->onUpdate('CASCADE');
+            $table->string('name');
+            $table->foreignId('category_id')->constrained('product_categories')->onDelete('CASCADE')->onUpdate('CASCADE');
             $table->foreignId('store_id')->constrained('stores')->onDelete('CASCADE')->onUpdate('CASCADE');
-            $table->json('name');
-            $table->json('description');
-            $table->double('small_price')->nullable();
-            $table->double('medium_price')->nullable();
-            $table->double('large_price')->nullable();
-            $table->float('discount')->default(0);
+            $table->longText('description')->nullable();
+            $table->float('main_price');
+            $table->float('discount')->nullable();
             $table->string('image')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();

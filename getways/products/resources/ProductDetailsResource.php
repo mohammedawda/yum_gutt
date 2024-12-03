@@ -2,29 +2,26 @@
 
 namespace getways\products\resources;
 
+use getways\products\models\Size;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 class ProductDetailsResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
-    */
     public function toArray(Request $request): array
     {
+        $sizesNotRelated = Size::whereDoesntHave('products', function ($query) {
+            $query->where('products.id', $this->id);
+        })->get();
         return [
-            'id'           => $this->id,
-            'name'         => $this->name ?? '',
-            'category_id'  => $this->name_en ?? '',
-            'category'     => $this->category?->name,
-            'small_price'  => $this->small_price ?? null,
-            'medium_price' => $this->medium_price ?? null,
-            'large_price'  => $this->large_price ?? null,
-            'discount'     => $this->discount ?? 0,
-            'image'        => $this->image,
-            'created_at'   => $this->created_at,
+            'id'           => (int)$this->id,
+            'name'         => $this->name,
+            'description'  => $this->description,
+            'image'        => $this->image_url,
+            'discount'     => (string)$this->discount,
+            'main_price'   => (string)$this->main_price,
+            'category'     => new ProductCategoryResource($this->category),
+            'sizes'        => ProductSizesResource::collection($this->sizes),
+            'other_sizes'  => SizeDetailsResource::collection($sizesNotRelated),
         ];
     }
 }

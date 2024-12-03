@@ -6,12 +6,21 @@ use getways\products\logic\CreateProduct;
 use getways\products\logic\menu;
 use getways\products\logic\ProductDestroy;
 use getways\products\logic\ProductDetails;
+use getways\products\logic\Size;
 use getways\products\logic\UpdateProduct;
 use getways\products\repositories\ProductRepository;
 
 class EntryPoint
 {
     /************************************ products ************************************/
+    public function allSizes(array $productData)
+    {
+        return (new Size(new ProductRepository()))->allSizes($productData);
+    }
+    public function allCategory(array $productData)
+    {
+        return (new Size(new ProductRepository()))->allCategory($productData);
+    }
     public function createProduct(array $productData)
     {
         return (new CreateProduct(new ProductRepository()))->createProduct($productData);

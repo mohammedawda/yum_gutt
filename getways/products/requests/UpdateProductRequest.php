@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UpdateProductRequest extends FormRequest
+class UpdateProductRequest extends CreateProductRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,23 +23,6 @@ class UpdateProductRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name'         => 'nullable|string',
-            'description'  => 'nullable|string',
-            'category_id'  => 'nullable|exists:categories,id',
-            'image'        => 'nullable|image|mimes:jpg,jpeg,png',
-            'small_price'  => 'nullable|numeric',
-            'medium_price' => 'nullable|numeric',
-            'large_price'  => 'nullable|numeric',
-            'discount'     => 'nullable|numeric',
-        ];
+        return Parent::rules();
     }
-
-   protected function failedValidation(Validator $validator)
-   {
-       throw new HttpResponseException(response()->json([
-           'status'  => false,
-           'message' => implode(', ', $validator->errors()->all()),
-       ], 403));
-   }
 }

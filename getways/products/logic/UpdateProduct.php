@@ -4,15 +4,21 @@ namespace getways\products\logic;
 
 use Exception;
 use getways\products\resources\ProductDetailsResource;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 class UpdateProduct extends ProductManager
 {
     public function updateProduct($productId, $productData)
     {
+//        dd($productData);
         try{
             $product = $this->checkProductExistance($productId);
-            $this->updateImageOfProduct($product, $productData);
+            $this->updateImageOfProduct(oldObject: $product, productData: $productData);
+            if (array_key_exists('sizes', $productData)) {
+                $sizesPrice = Arr::pull($productData, 'sizes');
+                $this->handelPriceSizeProduct(data: $sizesPrice,product: $product);
+            }
             $this->productRepository->updateProductByObject($product, $productData);
             return sendResponse(true, __('Product updated'), new ProductDetailsResource($product));
         } catch (Exception $e) {

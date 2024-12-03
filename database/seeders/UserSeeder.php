@@ -48,6 +48,8 @@ class UserSeeder extends Seeder
                 'national_id_photo_type' => null,
                 'national_id'            => null,
                 'is_open'                => 1,
+                'serial_number'           => 3,
+                'category_id'=>1
             ],
         ]);
     }

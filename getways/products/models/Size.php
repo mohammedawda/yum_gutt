@@ -5,49 +5,36 @@ namespace getways\products\models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Translatable\HasTranslations;
 
-class Product extends Model
+class Size extends Model
 {
-    use SoftDeletes;
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
     */
     protected $guarded = [];
+    use HasTranslations;
+    protected array $translatable = ['name'];
     /********************************* accessores *********************************/
-    public function getImageUrlAttribute()
-    {
-        return !is_null($this->image) ? GetFile(FileDir('product_images').$this->image) : null;
-    }
 
     public function getCreatedAtAttribute($value)
     {
         return !is_null($value) ? Carbon::parse($value)->format('Y-m-d H:i:s') : null;
     }
     /*********************************** scopes ***********************************/
-    public function scopeStoreProducts($query)
-    {
-        return $query->where('store_id', Auth::user()->store?->id);
-    }
     /********************************* relations *********************************/
-    public function country()
-    {
-        // return $this->belongsTo(Country::class, 'country_id');
-    }
+
     public function category(): BelongsTo
     {
-        return $this->belongsTo(ProductCategory::class, 'category_id');
+        return $this->belongsTo(Category::class);
     }
-
-    public function store()
+    public function products(): BelongsToMany
     {
-        return $this->belongsTo(Store::class);
-    }
-    public function sizes()
-    {
-        return $this->belongsToMany(Size::class)->withPivot('price')->withTimestamps();
+        return $this->belongsToMany(Product::class)->withPivot('price')->withTimestamps();
     }
 }

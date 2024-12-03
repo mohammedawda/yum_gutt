@@ -30,12 +30,14 @@ Route::middleware([StoreMiddleware::class])->group(function () {
         Route::get('orders/to/deliver', 'ordersToDeliver');
         Route::get('orders', 'storeOrders');
     });
-    Route::controller(ProductController::class)->group(function () {
-        Route::post('create_product', 'createProduct');
-        Route::post('update_product/{product_id}', 'updateProduct');
-        Route::delete('delete_product/{product_id}', 'deleteProduct');
+    Route::controller(ProductController::class)->prefix('products')->group(function () {
+        Route::get('all_sizes', 'allSizes');
+        Route::get('all_category', 'allCategory');
         Route::get('menu', 'menu');
-        Route::get('find_product/{product_id}', 'findProduct');
+        Route::post('create', 'createProduct');
+        Route::get('details/{product_id}', 'findProduct');
+        Route::put('update/{product_id}', 'updateProduct');
+        Route::delete('delete/{product_id}', 'deleteProduct');
     });
     Route::controller(ScheduleController::class)->group(function () {
         Route::post('create_schedule', 'createSchedule');
