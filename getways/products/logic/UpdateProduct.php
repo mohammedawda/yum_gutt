@@ -14,7 +14,7 @@ class UpdateProduct extends ProductManager
 //        dd($productData);
         try{
             $product = $this->checkProductExistance($productId);
-            $this->updateImageOfProduct(oldObject: $product, productData: $productData);
+            $this->updateImageOfProduct(oldObject: $product, productData: $productData, dir:'product_images');
             if (array_key_exists('sizes', $productData)) {
                 $sizesPrice = Arr::pull($productData, 'sizes');
                 $this->handelPriceSizeProduct(data: $sizesPrice,product: $product);

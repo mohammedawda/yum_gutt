@@ -19,23 +19,30 @@ if (!function_exists('Upload')) {
         throw new Exception('there is an error with uploading the '.$dir, 405);
     }
 }
-
 if (!function_exists('FileDir')) {
-    function FileDir($dir)
+    function FileDir($dir): string
     {
         $url = 'uploads/';
-        switch($dir) {
-            case 'user_images':
-                return  $url . 'user_images/';
-            case 'profile_photo':
-                return $url . 'profile_photo/';
-            case 'product_images':
-                return $url . 'product_images/';
-            default:
-                return  $url . 'images';
-        }
+        return $url . ($dir ?: 'images').'/';
     }
 }
+
+//if (!function_exists('FileDir')) {
+//    function FileDir($dir)
+//    {
+//        $url = 'uploads/';
+//        switch($dir) {
+//            case 'user_images':
+//                return  $url . 'user_images/';
+//            case 'profile_photo':
+//                return $url . 'profile_photo/';
+//            case 'product_images':
+//                return $url . 'product_images/';
+//            default:
+//                return  $url . 'images';
+//        }
+//    }
+//}
 
 
 // if (!function_exists('ExistsImage')) {

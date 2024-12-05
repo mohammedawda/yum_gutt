@@ -5,6 +5,7 @@ namespace getways\products\models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 
@@ -49,5 +50,9 @@ class Product extends Model
     public function sizes()
     {
         return $this->belongsToMany(Size::class)->withPivot('price')->withTimestamps();
+    }
+    public function extraProductCategory(): HasMany
+    {
+        return $this->hasMany(ExtraProductCategory::class);
     }
 }

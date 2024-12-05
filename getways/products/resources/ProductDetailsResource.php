@@ -22,6 +22,7 @@ class ProductDetailsResource extends JsonResource
             'category'     => new ProductCategoryResource($this->category),
             'sizes'        => ProductSizesResource::collection($this->sizes),
             'other_sizes'  => SizeDetailsResource::collection($sizesNotRelated),
+            'extra_product_category'  => ExtraProductCategoryDetailsResource::collection($this->extraProductCategory),
         ];
     }
 }
