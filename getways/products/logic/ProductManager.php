@@ -3,25 +3,31 @@
 namespace getways\products\logic;
 
 use Exception;
+use getways\products\repositories\ExtraProductRepository;
 use getways\products\repositories\ProductRepository;
+use Illuminate\Support\Arr;
 
 class ProductManager
 {
+    public ExtraProductRepository $extraRepository ;
     public function __construct(protected ProductRepository $productRepository)
     {
+        $this->extraRepository = new ExtraProductRepository();
     }
 
-    protected function checkProductKeys($productData)
+    protected function handelPriceSizeProduct($data,$product): void
     {
-        if(!array_key_exists('small_price', $productData) && !array_key_exists('medium_price', $productData) && !array_key_exists('large_price', $productData)) {
-            throw new Exception(('Missed product price'), 400);
-        }
+        $sizesData = collect($data)->mapWithKeys(function ($item) {
+            return [$item['id'] => ['price' => $item['price']]];
+        })->toArray();
+        $product->sizes()->sync($sizesData);
     }
 
     protected function appendImageOfProduct(&$productData)
     {
         if (array_key_exists('image', $productData) && !is_null($productData['image'])) {
-            $productData['image'] = upload($productData['image'], 'product_images');
+            $image = Arr::pull($productData, 'image');
+            $productData['image'] = upload($image, 'product_images');
         }
     }
 
@@ -34,17 +40,38 @@ class ProductManager
         throw new Exception(__('Product not found'), 404);
     }
 
-    protected function updateImageOfProduct($oldObject, &$productData)
+    protected function checkExtraProductCategoryExistance($productId,$extraProductCategoryId)
+    {
+        $product = $this->checkProductExistance($productId);
+        $extraProductCategoryModel = $this->extraRepository->findExtraProductCategory(product: $product,id: $extraProductCategoryId);
+        if($extraProductCategoryModel) {
+            return $extraProductCategoryModel;
+        }
+        throw new Exception(__('Extra product category not found'), 404);
+    }
+
+    protected function checkExtraProductExistance($productId,$extraProductCategoryId,$extraProductId)
+    {
+        $extraProductCategoryModel = $this->checkExtraProductCategoryExistance($productId,$extraProductCategoryId);
+        $extraProductModel = $this->extraRepository->findExtraProduct(product: $extraProductCategoryModel,id: $extraProductId);
+        if($extraProductModel) {
+            return $extraProductModel;
+        }
+        throw new Exception(__('Extra product not found'), 404);
+    }
+
+    protected function updateImageOfProduct($oldObject, &$productData, $dir)
     {
         if (array_key_exists('image', $productData) && !is_null($productData['image'])) {
             if(!is_null($oldObject->image)) {
-                $oldImage = fileExists(FileDir('product_models'), $oldObject->image)
-                ? FileDir('product_models').$oldObject->image : false;
+                $oldImage = fileExists(FileDir($dir), $oldObject->image)
+                ? FileDir($dir).$oldObject->image : false;
                 if($oldImage) {
                     unlinkFile($oldImage);
                 }
             }
-            $productData['image'] = upload($productData['image'], 'product_models');
+            $image = Arr::pull($productData, 'image');
+            $productData['image'] = upload($image, $dir);
         }
     }
 }

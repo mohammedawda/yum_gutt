@@ -2,11 +2,11 @@
 
 namespace getways\products\requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UpdateProductRequest extends CreateProductRequest
+class UpdateExtraProductCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,6 +23,17 @@ class UpdateProductRequest extends CreateProductRequest
      */
     public function rules(): array
     {
-        return Parent::rules();
+        return [
+            'category_name'          => 'required|string',
+            'is_require'             => 'required|in:0,1',
+        ];
     }
+
+   protected function failedValidation(Validator $validator)
+   {
+       throw new HttpResponseException(response()->json([
+           'status'  => false,
+           'message' => implode(', ', $validator->errors()->all()),
+       ], 403));
+   }
 }

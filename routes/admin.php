@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::middleware([AdminMiddleware::class])->group(function () {
-    
+
     Route::controller(UsersController::class)->group(function () {
         Route::post('/create_user', 'createUser');
         Route::post('/update_user/{user_id}', 'updateUser');

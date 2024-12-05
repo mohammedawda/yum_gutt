@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('stores', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('CASCADE')->onUpdate('CASCADE');
+            $table->foreignId('category_id')->nullable()->constrained()->nullOnDelete()->cascadeOnUpdate();
             $table->string('national_id_photo')->nullable();
             $table->tinyInteger('national_id_photo_type')->nullable()->comment('1 => passport, 2 => national_id');
             $table->string('national_id')->nullable();
@@ -21,7 +22,7 @@ return new class extends Migration
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
             $table->softDeletes();
-            $table->index(['user_id']);
+            $table->index(['user_id', 'category_id']);
         });
     }
 

@@ -9,6 +9,14 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    public function allSizes(Request $request)
+    {
+        return loadGetway('products')->allSizes($request->all());
+    }
+    public function allCategory(Request $request)
+    {
+        return loadGetway('products')->allCategory($request->all());
+    }
     public function createProduct(CreateProductRequest $request)
     {
         return loadGetway('products')->createProduct($request->validated());

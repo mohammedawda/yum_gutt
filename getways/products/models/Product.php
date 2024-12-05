@@ -4,6 +4,8 @@ namespace getways\products\models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,9 +19,9 @@ class Product extends Model
     */
     protected $guarded = [];
     /********************************* accessores *********************************/
-    public function getImageAttribute()
+    public function getImageUrlAttribute()
     {
-        return !is_null($this->image) ? GetFile(FileDir('product_images').$this->national_id_photo) : null;
+        return !is_null($this->image) ? GetFile(FileDir('product_images').$this->image) : null;
     }
 
     public function getCreatedAtAttribute($value)
@@ -29,21 +31,28 @@ class Product extends Model
     /*********************************** scopes ***********************************/
     public function scopeStoreProducts($query)
     {
-        return $query->where('store_id', Auth::id());
+        return $query->where('store_id', Auth::user()->store?->id);
     }
     /********************************* relations *********************************/
     public function country()
     {
         // return $this->belongsTo(Country::class, 'country_id');
     }
-
-    public function category()
+    public function category(): BelongsTo
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(ProductCategory::class, 'category_id');
     }
 
     public function store()
     {
         return $this->belongsTo(Store::class);
+    }
+    public function sizes()
+    {
+        return $this->belongsToMany(Size::class)->withPivot('price')->withTimestamps();
+    }
+    public function extraProductCategory(): HasMany
+    {
+        return $this->hasMany(ExtraProductCategory::class);
     }
 }

@@ -5,7 +5,7 @@ namespace getways\products\resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class MenuDetailsResource extends JsonResource
+class ExtraProductCategoryResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,12 +16,9 @@ class MenuDetailsResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'           => (int)$this->id,
-            'name'         => $this->name,
-            'description'  => $this->description,
-            'image'        => $this->image_url,
-            'discount'     => (string)$this->discount,
-            'main_price'   => (string)$this->main_price,
+            'id'            => (int)$this->id,
+            'category_name' => $this->category_name,
+            'is_require'    => (boolean)$this->is_require,
         ];
     }
 }
